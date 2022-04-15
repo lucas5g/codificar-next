@@ -1,22 +1,19 @@
 import { useState, useEffect } from 'react'
-export function SelectFilter({ options }) {
+export function SelectFilter({ options, name, changeSelected  }, props) {
 
-    // console.log(issues)
-    // const [options, setOptions] = useState([])
+    // const 
 
-    useEffect(() => {
-        // setOptions(issues?.map(issue => issue.project))
-        // console.log(options)
-    }, [])
     return (
         <div className="col-md-4">
             <select
                 className="form-select"
                 style={{ fontSize: '28px', cursor: 'pointer' }}
                 onChange={(event) => {
-                    console.log(event.target.value)
+                    changeSelected(event.target.value)
+                    // setProjectSelected(event.target.value)
                 }}
             >
+                <option value="">{name} {options.length}</option>
                 {options?.map(option => (
 
                     <option

@@ -28,7 +28,7 @@ export class IssueController {
         const issues = [{
                 "url": "https://redmine.codificar.com.br/issues/23657",
                 "subject": "[LOJA] - Imprimir o pedido após a compra",
-                "status": "Nova",
+                "status": "Homologação",
                 "id": 23657,
                 "assigned_to": {
                     "id": 24,
