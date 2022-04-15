@@ -105,7 +105,7 @@ export default function Issues() {
 
             </div>
 
-            {(issues.length === 0 || noResult) &&
+            {issues.length === 0 &&
                 <div
                     className="d-flex align-items-center justify-content-center"
                     style={{ height: '22.5em' }}>
@@ -116,7 +116,7 @@ export default function Issues() {
 
                             </h2>
                         }
-                        {issues.length === 0 &&
+                        {!noResult && 
                             <h2>
                                 Carregando ...
                             </h2>

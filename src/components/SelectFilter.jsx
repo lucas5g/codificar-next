@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react'
 export function SelectFilter({ options, name, changeSelected, issues }) {
-
-    // const 
-
     return (
         <div className="col-md-4">
             <select
-                className="form-select"
+                className="form-select mb-1"
                 style={{ fontSize: '28px', cursor: 'pointer' }}
                 onChange={(event) => {
                     changeSelected(event.target.value)
-                    // setProjectSelected(event.target.value)
                 }}
             >
                 <option value="">{name} ({issues.length})</option>
