@@ -1,11 +1,11 @@
 export function IssuesColumn({ issues }) {
 
-    if(issues.length === 0){
+    if (issues.length === 0) {
         return
     }
     return (
 
-        
+
         <div className="col-md">
             <h6>
                 {issues[0]?.status}
@@ -16,7 +16,12 @@ export function IssuesColumn({ issues }) {
 
                 {issues.map(issue => (
 
-                    <a href={issue.url} target="_blank" className="list-group-item list-group-item-action " key={issue.id} >
+                    <a
+                        href={issue.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="list-group-item list-group-item-action"
+                        key={issue.id} >
                         <div className="d-flex w-100 justify-content-between ">
                             <h6 className="mb-1 fs-8">{issue.project.name}</h6>
                             <small style={{ fontSize: 12 }}>{issue.id}</small>

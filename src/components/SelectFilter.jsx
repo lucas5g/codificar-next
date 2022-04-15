@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-export function SelectFilter({ options, name, changeSelected  }, props) {
+export function SelectFilter({ options, name, changeSelected, issues }) {
 
     // const 
 
@@ -13,14 +13,14 @@ export function SelectFilter({ options, name, changeSelected  }, props) {
                     // setProjectSelected(event.target.value)
                 }}
             >
-                <option value="">{name} {options.length}</option>
+                <option value="">{name} ({issues.length})</option>
                 {options?.map(option => (
 
                     <option
                         value={option.name}
                         key={option.id}
                     >
-                        {option.name}
+                        {option.name} ({issues.length})
                     </option>
                 ))}
             </select>

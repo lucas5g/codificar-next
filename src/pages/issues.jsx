@@ -26,54 +26,55 @@ export default function Issues() {
 
 
     useEffect(() => {
+
+        async function getIssues() {
+
+            // await delay(2000)
+            try {
+
+                const { data } = await api.get('/issues')
+
+                const { issues, projects, trackers, assigneds } = data
+                let issuesFilter = issues
+
+                issuesFilter = projectSelected === ''
+                    ? issuesFilter
+                    : issuesFilter.filter(issue => issue.project.name === projectSelected)
+
+
+                issuesFilter = assignedSelected === ''
+                    ? issuesFilter
+                    : issuesFilter.filter(issue => issue.assigned_to.name === assignedSelected)
+
+                issuesFilter = trackersSelected === ''
+                    ? issuesFilter
+                    : issuesFilter.filter(issue => issue.tracker.name === trackersSelected)
+
+                setNoResult(issuesFilter.length > 0 ? false : true)
+                setIssues(issuesFilter)
+
+                setIssuesNew(issuesFilter.filter(issue => issue.status === 'Nova'))
+                setIssuesPending(issuesFilter.filter(issue => issue.status === 'Pendente'))
+                setIssuesReopened(issuesFilter.filter(issue => issue.status === 'Reaberta'))
+                setIssuesInprogress(issuesFilter.filter(issue => issue.status === "Em andamento"
+                ))
+                setIssuesResolved(issuesFilter.filter(issue => issue.status === "Resolvida"
+                ))
+                setIssuesHomologation(issuesFilter.filter(issue => issue.status === "Homologação"
+                ))
+
+                setProjects(projects)
+                setTrackers(trackers)
+                setAssigneds(assigneds)
+
+            } catch (error) {
+                alert("Erro no servidor")
+            }
+        }
+
         getIssues()
 
     }, [projectSelected, trackersSelected, assignedSelected])
-
-    async function getIssues() {
-
-        // await delay(2000)
-        try {
-
-            const { data } = await api.get('/issues')
-
-            const { issues, projects, trackers, assigneds } = data
-            setIssues(issues)
-            let issuesFilter = issues
-
-            issuesFilter = projectSelected === ''
-                ? issuesFilter
-                : issuesFilter.filter(issue => issue.project.name === projectSelected)
-
-
-            issuesFilter = assignedSelected === ''
-                ? issuesFilter
-                : issuesFilter.filter(issue => issue.assigned_to.name === assignedSelected)
-
-            issuesFilter = trackersSelected === ''
-                ? issuesFilter
-                : issuesFilter.filter(issue => issue.tracker.name === trackersSelected)
-
-            setNoResult(issuesFilter.length > 0 ? false : true)
-
-            setIssuesNew(issuesFilter.filter(issue => issue.status === 'Nova'))
-            setIssuesPending(issuesFilter.filter(issue => issue.status === 'Pendente'))
-            setIssuesReopened(issuesFilter.filter(issue => issue.status === 'Reaberta'))
-            setIssuesInprogress(issuesFilter.filter(issue => issue.status === "Em andamento"
-            ))
-            setIssuesResolved(issuesFilter.filter(issue => issue.status === "Resolvida"
-            ))
-            setIssuesHomologation(issuesFilter.filter(issue => issue.status === "Homologação"
-            ))
-
-            setProjects(projects)
-            setTrackers(trackers)
-            setAssigneds(assigneds)
-
-        } catch (error) {
-            alert("Erro no servidor")
-        }
-    }
 
     return (
         <div className="container-fluid">
@@ -82,17 +83,23 @@ export default function Issues() {
                 <SelectFilter
                     options={projects}
                     name="Projetos"
-                    changeSelected={setProjectSelected} />
+                    changeSelected={setProjectSelected}
+                    issues={issues}
+                />
 
                 <SelectFilter
                     options={trackers}
                     name="Tipos"
                     changeSelected={setTrackersSelected}
+                    issues={issues}
+
                 />
                 <SelectFilter
                     options={assigneds}
                     name="Responsáveis"
                     changeSelected={setAssignedSelected}
+                    issues={issues}
+                    type="assinged_to"
 
                 />
 
@@ -112,7 +119,7 @@ export default function Issues() {
                         {issues.length === 0 &&
                             <h2>
                                 Carregando ...
-                            </h2>                            
+                            </h2>
                         }
                     </div>
                 </div>
