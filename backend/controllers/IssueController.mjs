@@ -24,7 +24,9 @@ export class IssueController {
         const assigneds = distinctArrayObj({ arrayObj: issues, filter: 'assigned_to' })
         const projects = distinctArrayObj({ arrayObj: issues, filter: 'project' })
 
-        return res.json({
+        res
+        // .status(500)
+            .json({
             issues,
             trackers,
             assigneds,

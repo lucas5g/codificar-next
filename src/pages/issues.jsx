@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { IssuesColumn } from "../components/IssuesColumn"
 import { SelectFilter } from "../components/SelectFilter"
+import { TextCenter } from "../components/TextCenter"
 import { delay } from "../helpers"
 import { useFetch } from "../hooks/useFetch"
 import { api } from "../services/api"
@@ -67,19 +68,15 @@ export default function Issues() {
     }, [projectSelected, trackersSelected, assignedSelected, data])
 
    
-    if (error) return <div> Erro na api</div>
+    if (error) {
+        return (
+          <TextCenter text="Erro ao conectar com o servidor :(" />
+        )
+    }
 
     if (!data) {
         return (
-            <div
-                className="d-flex align-items-center justify-content-center"
-                style={{ height: '22.5em' }}>
-                <div>
-                    <h2>
-                        Carregando ...
-                    </h2>
-                </div>
-            </div>
+           <TextCenter text="Carregando..." />
         )
     }
 
