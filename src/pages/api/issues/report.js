@@ -1,6 +1,6 @@
-import moment from "moment"
 import { apiRedmine } from "../../../services/api"
 import { sendMessageRocket, devUserRocket } from "../../../helpers/index.js"
+import moment from "moment-timezone"
 
 export default async function report(req, res) {
 
@@ -10,7 +10,7 @@ export default async function report(req, res) {
     console.log(req.rawHeaders[1])
 
     // return
-    const date = req.query.date || moment().format('YYYY-MM-DD')
+    const date = req.query.date || moment().tz('America/Sao_Paulo').format('YYYY-MM-DD')
 
 
     const filter = `updated_on=${date}&status_id=*&sort=status`
@@ -39,7 +39,7 @@ export default async function report(req, res) {
             }
         })
 
-    let textReport = `\n:robot: Report geral do Projeto de Marketplace *${moment(date).format('DD/MM/YYYY')} ${moment().format('HH:mm')}*\n`
+    let textReport = `\n:robot: Report geral do Projeto de Marketplace *${moment(date).tz('America/Sao_Paulo').format('DD/MM/YYYY')} ${moment().tz('America/Sao_Paulo').format('HH:mm')}*\n`
 
     issues.map((issue, index) => (
 
