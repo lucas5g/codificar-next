@@ -59,7 +59,7 @@ export default async function report(req, res) {
 
 
 
-    if (moment().format('HH:mm') === '23:55' && req.rawHeaders[1] === 'codificar-next.vercel.app') {
+    if (moment().tz('America/Sao_Paulo').format('HH') === '23' && req.rawHeaders[1] === 'codificar-next.vercel.app') {
         sendMessageRocket(process.env.ROCKET_CHANNEL, textReport)
     } else {
         sendMessageRocket(process.env.ROCKET_CHANNEL_TEST, textReport)
