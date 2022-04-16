@@ -1,14 +1,14 @@
-export function TextCenter({ text }) {
+export function TextCenter({ text, height ='90vh' }) {
 
     return (
         <div
             className="d-flex align-items-center justify-content-center"
-            style={{ height: '22.5em' }
+            style={{ height }
             }>
             <div>
-                <h2>
+                <h1>
                     {text}
-                </h2>
+                </h1>
             </div>
         </div>
     )

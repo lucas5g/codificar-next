@@ -34,7 +34,7 @@ export default function Issues() {
             return
         }
         const { issues, projects, trackers, assigneds } = data
-        let issuesFilter = issues 
+        let issuesFilter = issues
 
         issuesFilter = projectSelected === ''
             ? issuesFilter
@@ -67,21 +67,21 @@ export default function Issues() {
         setAssigneds(assigneds)
     }, [projectSelected, trackersSelected, assignedSelected, data])
 
-   
+
     if (error) {
         return (
-          <TextCenter text="Erro ao conectar com o servidor :(" />
+            <TextCenter text="Erro ao conectar com o servidor :(" />
         )
     }
 
     if (!data) {
         return (
-           <TextCenter text="Carregando..." />
+            <TextCenter text="Carregando..." />
         )
     }
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid mt-5">
 
             <div className="row mb-4">
                 <SelectFilter
@@ -110,16 +110,7 @@ export default function Issues() {
             </div>
 
             {noResult &&
-                <div
-                    className="d-flex align-items-center justify-content-center"
-                    style={{ height: '22.5em' }}>
-                    <div>
-                        <h2>
-                            Nada encontrado :(
-
-                        </h2>
-                    </div>
-                </div>
+                <TextCenter text="Nada encontrado :(" height="70vh" />
             }
             <div className="row">
 

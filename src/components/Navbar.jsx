@@ -1,7 +1,7 @@
 import Link from "next/link"
 export function Navbar() {
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-success mb-5">
+        <nav className="navbar navbar-expand-lg navbar-light bg-success">
             <div className="container-fluid">
                 <Link href='/'>
                     <a className="navbar-brand text-white">
