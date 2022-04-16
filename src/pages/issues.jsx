@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { IssuesColumn } from "../components/IssuesColumn"
 import { SelectFilter } from "../components/SelectFilter"
 import { TextCenter } from "../components/TextCenter"
-import { delay } from "../helpers"
+// import { delay } from "../helpers"
 import { useFetch } from "../hooks/useFetch"
 import { api } from "../services/api"
 
@@ -89,6 +89,7 @@ export default function Issues() {
                     name="Projetos"
                     changeSelected={setProjectSelected}
                     issues={issues}
+                    type="project"
                 />
 
                 <SelectFilter
@@ -96,6 +97,7 @@ export default function Issues() {
                     name="Tipos"
                     changeSelected={setTrackersSelected}
                     issues={issues}
+                    type="tracker"
 
                 />
                 <SelectFilter
@@ -103,7 +105,7 @@ export default function Issues() {
                     name="Responsáveis"
                     changeSelected={setAssignedSelected}
                     issues={issues}
-                    type="assinged_to"
+                    type="assigned_to"
 
                 />
 

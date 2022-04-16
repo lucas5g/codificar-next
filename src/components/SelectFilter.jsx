@@ -1,6 +1,8 @@
-export function SelectFilter({ options, name, changeSelected, issues }) {
+export function SelectFilter({ options, name, changeSelected, issues, type }) {
+    
     return (
         <div className="col-md-4">
+    
             <select
                 className="form-select mb-1"
                 style={{ fontSize: '28px', cursor: 'pointer' }}
@@ -8,14 +10,17 @@ export function SelectFilter({ options, name, changeSelected, issues }) {
                     changeSelected(event.target.value)
                 }}
             >
-                <option value="">{name} ({issues.length})</option>
+                <option value="">
+                    {name} ({issues.length})
+                </option>
                 {options?.map(option => (
 
                     <option
                         value={option.name}
                         key={option.id}
                     >
-                        {option.name} ({issues.length})
+                        {option.name} 
+                        ({issues.filter(issue => issue[type]  && issue[type].name === option.name).length})
                     </option>
                 ))}
             </select>
