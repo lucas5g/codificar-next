@@ -1,6 +1,6 @@
 import moment from "moment"
 import { apiRedmine } from "../../../services/api"
-import { sendMessageRocket, distinctArrayObj } from "../../../helpers/index.js"
+import { sendMessageRocket, devUserRocket } from "../../../helpers/index.js"
 
 export default async function report(req, res) {
 
@@ -10,7 +10,6 @@ export default async function report(req, res) {
 
     const date = req.query.date || moment().format('YYYY-MM-DD')
 
-    console.log(moment().format('HH:mm'))
 
     const filter = `updated_on=${date}&status_id=*&sort=status`
     const { data } = await apiRedmine.get(`/issues.json?${filter}`)
@@ -56,14 +55,12 @@ export default async function report(req, res) {
 
     ))
 
-    sendMessageRocket('#marketplace', textReport)
 
-
+    if (moment().format('HH:mm') === '23:55') {
+        sendMessageRocket(process.env.ROCKET_CHANNEL, textReport)
+    }
     res.json({
-            msg: 'report'
-        })
-        // res.json({
-        //     issues,
-        //     times
-        // })
+        issues,
+        times
+    })
 }

@@ -77,40 +77,42 @@ export default function Issues() {
                 <title>Cods | Issues</title>
             </Head>
             {error &&
-                <TextCenter text="Erro ao conectar com o servidor :(" />
+                <TextCenter text="Erro ao conectar com o servidor :(" height="60vh" />
 
             }
             {!data &&
-                <TextCenter text="Carregando..." />
+                <TextCenter text="Carregando..." height="60vh" />
             }
 
-            <div className="row mb-4">
-                <SelectFilter
-                    options={projects}
-                    name="Projetos"
-                    changeSelected={setProjectSelected}
-                    issues={issues}
-                    type="project"
-                />
+            {data &&
+                <div className="row mb-4">
+                    <SelectFilter
+                        options={projects}
+                        name="Projetos"
+                        changeSelected={setProjectSelected}
+                        issues={issues}
+                        type="project"
+                    />
 
-                <SelectFilter
-                    options={trackers}
-                    name="Tipos"
-                    changeSelected={setTrackersSelected}
-                    issues={issues}
-                    type="tracker"
+                    <SelectFilter
+                        options={trackers}
+                        name="Tipos"
+                        changeSelected={setTrackersSelected}
+                        issues={issues}
+                        type="tracker"
 
-                />
-                <SelectFilter
-                    options={assigneds}
-                    name="Responsáveis"
-                    changeSelected={setAssignedSelected}
-                    issues={issues}
-                    type="assigned_to"
+                    />
+                    <SelectFilter
+                        options={assigneds}
+                        name="Responsáveis"
+                        changeSelected={setAssignedSelected}
+                        issues={issues}
+                        type="assigned_to"
 
-                />
+                    />
 
-            </div>
+                </div>
+            }
 
             {noResult &&
                 <TextCenter text="Nada encontrado :(" height="60vh" />
