@@ -6,15 +6,6 @@ import { apiRocket } from "../services/api"
 
 export const sendMessageRocket = async(channel, text) => {
 
-    if (process.env.BASE_URL === 'http://localhost:3000') {
-        console.log('no send job localhost')
-        console.log({
-            channel,
-            text
-        })
-        return
-    }
-
     // return
     try {
 
@@ -22,7 +13,13 @@ export const sendMessageRocket = async(channel, text) => {
             user: process.env.ROCKET_USERNAME,
             password: process.env.ROCKET_PASSWORD
         })
+
+        // console.log('process', process.env.ROCKET_USERNAME, process.env.ROCKET_PASSWORD);
+
+        // return
+
         const { userId, authToken } = data.data
+
 
         await apiRocket.post('/chat.postMessage', {
             channel,

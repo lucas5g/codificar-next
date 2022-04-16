@@ -2,6 +2,7 @@ import axios from "axios";
 
 const baseURL = () => {
     if (typeof window !== 'undefined') {
+        console.log(window.location.origin)
         return window.location.origin
     }
     // return process.env.BASE_URL
@@ -22,4 +23,3 @@ export const apiRedmine = axios.create({
         project_id: process.env.REDMINE_PROJECT_ID
     }
 })
-console.log(baseURL())

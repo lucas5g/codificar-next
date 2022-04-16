@@ -7,7 +7,9 @@ export default async function report(req, res) {
     /**
      * Report diário às 11:58
      */
+    console.log(req.rawHeaders[1])
 
+    // return
     const date = req.query.date || moment().format('YYYY-MM-DD')
 
 
@@ -56,11 +58,16 @@ export default async function report(req, res) {
     ))
 
 
-    if (moment().format('HH:mm') === '23:55') {
+
+    if (moment().format('HH:mm') === '23:55' && req.rawHeaders[1] === 'codificar-next.vercel.app') {
         sendMessageRocket(process.env.ROCKET_CHANNEL, textReport)
+    } else {
+        sendMessageRocket(process.env.ROCKET_CHANNEL_TEST, textReport)
+
     }
     res.json({
         issues,
         times
     })
+
 }
