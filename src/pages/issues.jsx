@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { useEffect, useState } from "react"
 import { IssuesColumn } from "../components/IssuesColumn"
 import { SelectFilter } from "../components/SelectFilter"
@@ -68,20 +69,20 @@ export default function Issues() {
     }, [projectSelected, trackersSelected, assignedSelected, data])
 
 
-    if (error) {
-        return (
-            <TextCenter text="Erro ao conectar com o servidor :(" />
-        )
-    }
-
-    if (!data) {
-        return (
-            <TextCenter text="Carregando..." />
-        )
-    }
-
     return (
+
+
         <div className="container-fluid mt-5">
+            <Head>
+                <title>Cods | Issues</title>
+            </Head>
+            {error &&
+                <TextCenter text="Erro ao conectar com o servidor :(" />
+
+            }
+            {!data &&
+                <TextCenter text="Carregando..." />
+            }
 
             <div className="row mb-4">
                 <SelectFilter
@@ -112,7 +113,7 @@ export default function Issues() {
             </div>
 
             {noResult &&
-                <TextCenter text="Nada encontrado :(" height="70vh" />
+                <TextCenter text="Nada encontrado :(" height="60vh" />
             }
             <div className="row">
 

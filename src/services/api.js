@@ -10,4 +10,8 @@ const baseURL = () => {
 export const api = axios.create({
     baseURL: `${baseURL()}/api`
 })
+
+export const apiRocket = axios.create({
+    baseURL: process.env.ROCKET_URL
+})
 console.log(baseURL())
