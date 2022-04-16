@@ -42,7 +42,7 @@ export default function Issues() {
 
         issuesFilter = assignedSelected === ''
             ? issuesFilter
-            : issuesFilter.filter(issue => issue.assigned_to?.name === assignedSelected)
+            : issuesFilter.filter(issue => issue.assigned_to.name === assignedSelected)
 
         issuesFilter = trackersSelected === ''
             ? issuesFilter
@@ -66,7 +66,57 @@ export default function Issues() {
         setAssigneds(assigneds)
     }, [projectSelected, trackersSelected, assignedSelected, data])
 
-   
+    // useEffect(() => {
+
+    //     async function getIssues() {
+
+    //         // await delay(2000)
+    //         try {
+
+    //             const { data } = await api.get('/issues')
+
+    //             const { issues, projects, trackers, assigneds } = data
+    //             let issuesFilter = issues
+
+    //             issuesFilter = projectSelected === ''
+    //                 ? issuesFilter
+    //                 : issuesFilter.filter(issue => issue.project.name === projectSelected)
+
+
+    //             issuesFilter = assignedSelected === ''
+    //                 ? issuesFilter
+    //                 : issuesFilter.filter(issue => issue.assigned_to.name === assignedSelected)
+
+    //             issuesFilter = trackersSelected === ''
+    //                 ? issuesFilter
+    //                 : issuesFilter.filter(issue => issue.tracker.name === trackersSelected)
+
+    //             setNoResult(issuesFilter.length > 0 ? false : true)
+    //             setIssues(issuesFilter)
+
+    //             setIssuesNew(issuesFilter.filter(issue => issue.status === 'Nova'))
+    //             setIssuesPending(issuesFilter.filter(issue => issue.status === 'Pendente'))
+    //             setIssuesReopened(issuesFilter.filter(issue => issue.status === 'Reaberta'))
+    //             setIssuesInprogress(issuesFilter.filter(issue => issue.status === "Em andamento"
+    //             ))
+    //             setIssuesResolved(issuesFilter.filter(issue => issue.status === "Resolvida"
+    //             ))
+    //             setIssuesHomologation(issuesFilter.filter(issue => issue.status === "Homologação"
+    //             ))
+
+    //             setProjects(projects)
+    //             setTrackers(trackers)
+    //             setAssigneds(assigneds)
+
+    //         } catch (error) {
+    //             alert("Erro no servidor")
+    //         }
+    //     }
+
+    //     getIssues()
+
+    // }, [projectSelected, trackersSelected, assignedSelected])
+
     if (error) return <div> Erro na api</div>
 
     if (!data) {

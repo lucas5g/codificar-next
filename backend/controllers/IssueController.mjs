@@ -20,15 +20,25 @@ export class IssueController {
         })
 
         // console.log(issues)
-        res.json(issues)
-            // console.log(data)
+        const trackers = distinctArrayObj({ arrayObj: issues, filter: 'tracker' })
+        const assigneds = distinctArrayObj({ arrayObj: issues, filter: 'assigned_to' })
+        const projects = distinctArrayObj({ arrayObj: issues, filter: 'project' })
+
+        return res.json({
+            issues,
+            trackers,
+            assigneds,
+            projects
+
+        })
+
     }
 
     static test(req, res) {
         const issues = [{
                 "url": "https://redmine.codificar.com.br/issues/23657",
                 "subject": "[LOJA] - Imprimir o pedido após a compra",
-                "status": "Homologação",
+                "status": "Pendente",
                 "id": 23657,
                 "assigned_to": {
                     "id": 24,
