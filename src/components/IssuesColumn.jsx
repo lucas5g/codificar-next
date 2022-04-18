@@ -22,7 +22,7 @@ export function IssuesColumn({ issues }) {
                         rel="noreferrer"
                         className={
                             `list-group-item list-group-item-action
-                            ${issue.priority !== 'Normal' && `bg-danger`}
+                            ${(issue.priority === 'Alta' || issue.priority === 'Urgente') && `bg-danger`}
                             ${!issue.assigned_to && `bg-warning`}
                             `                           
                         }

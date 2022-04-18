@@ -51,7 +51,8 @@ export default function Issues() {
             : issuesFilter.filter(issue => issue.tracker.name === trackersSelected)
 
         setNoResult(issuesFilter.length > 0 ? false : true)
-        setIssues(issuesFilter)
+        // setIssues(issuesFilter)
+        setIssues(issues)
 
         setIssuesNew(issuesFilter.filter(issue => issue.status === 'Nova'))
         setIssuesPending(issuesFilter.filter(issue => issue.status === 'Pendente'))
