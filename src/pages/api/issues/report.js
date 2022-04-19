@@ -53,13 +53,13 @@ export default async function report(req, res) {
     times.map((time, index) => (cont++,
         textReport += `
             ${cont + data.issues.length} - ${time.id} - ${time.comments}
-            ${time.user} - ${time.project}\n`
+            ${time.user} - *${time.project}*\n`
 
     ))
 
 
 
-    if (moment().tz('America/Sao_Paulo').format('HH') === '23' && req.rawHeaders[1] === 'codificar-next.vercel.app') {
+    if (moment().format('HH') === '23') {
         sendMessageRocket(process.env.ROCKET_CHANNEL, textReport)
     } else {
         sendMessageRocket(process.env.ROCKET_CHANNEL_TEST, textReport)

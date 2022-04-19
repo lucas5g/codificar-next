@@ -69,6 +69,17 @@ export default function Issues() {
         setAssigneds(assigneds)
     }, [projectSelected, trackersSelected, assignedSelected, data])
 
+    if (error) {
+        return (
+            <>
+                <Head>
+                    <title>Cods | Error</title>
+                </Head>
+                <TextCenter text="Erro ao conectar com o servidor :(" height="80vh" />
+            </>
+
+        )
+    }
 
     return (
 
@@ -77,10 +88,6 @@ export default function Issues() {
             <Head>
                 <title>Cods | Issues</title>
             </Head>
-            {error &&
-                <TextCenter text="Erro ao conectar com o servidor :(" height="60vh" />
-
-            }
             {!data &&
                 <TextCenter text="Carregando..." height="60vh" />
             }
