@@ -58,13 +58,8 @@ export default async function report(req, res) {
     ))
 
 
-
-    // if (moment().format('HH') === '23') {
     sendMessageRocket(process.env.ROCKET_CHANNEL, textReport)
-        // } else {
-        //     sendMessageRocket(process.env.ROCKET_CHANNEL_TEST, textReport)
 
-    // }
     res.json({
         issues,
         times

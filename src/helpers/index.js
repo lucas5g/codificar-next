@@ -14,9 +14,6 @@ export const sendMessageRocket = async(channel, text) => {
             password: process.env.ROCKET_PASSWORD
         })
 
-        // console.log('process', process.env.ROCKET_USERNAME, process.env.ROCKET_PASSWORD);
-
-        // return
 
         const { userId, authToken } = data.data
 
