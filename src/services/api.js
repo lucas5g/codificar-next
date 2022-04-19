@@ -3,6 +3,7 @@ import axios from "axios";
 const baseURL = () => {
     if (typeof window !== 'undefined') {
         console.log(window.location.origin)
+        console.log('0419')
         return window.location.origin
     }
     // return process.env.BASE_URL

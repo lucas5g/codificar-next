@@ -1,7 +1,7 @@
 git add .
 git commit -m "$1"
 git push
-ssh -t versionaplicativoderestaurante "cd codificar/codificar-next/ && git pull && pm2 restart codificar  --update-env"
+ssh -t versionaplicativoderestaurante "cd codificar/codificar-next/ && git pull && pm2 delete codificar && pm2 start npm --name 'codificar' -- start"
 ssh -t versionaplicativoderestaurante "cd codificar/codificar-next/ && cat .env"
 
 echo "http://version.aplicativoderestaurante.com.br:3000"
