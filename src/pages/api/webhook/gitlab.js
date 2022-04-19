@@ -6,7 +6,7 @@ export default function gitlab(req, res) {
 
     // console.log(req.body)
 
-    const user = req.body.username || 'lucas.sousa'
+    const author = req.body.commit ? req.body.commit.author.email.replace('@codificar.com.br', '') : 'lucas.sousa'
     const pipelineId = req.body.object_attributes ? req.body.object_attributes.id : '5399'
     const commit = req.body.commit ? req.body.commit.url : "https://git.codificar.com.br/marketplace/web/-/commit/2564a5d48ab82d1772ba10441cd20f5ec89913b0"
     const status = req.body.object_attributes ? req.body.object_attributes.status : 'false'
@@ -14,13 +14,13 @@ export default function gitlab(req, res) {
     let text = ''
     if (status === 'success') {
         text = `Sucesso no pipeline - https://git.codificar.com.br/marketplace/web/-/pipelines/${pipelineId}
-        @${user} seu commit está ok - ${commit}.
+        @${author} seu commit está ok - ${commit}.
         `
         sendMessageRocket('@lucas.sousa', text)
 
     } else if (status === 'failed') {
         text = `Erro no pipeline - https://git.codificar.com.br/marketplace/web/-/pipelines/${pipelineId}
-        @${user} verificar seu commit - ${commit}.
+        @${author} verificar seu commit - ${commit}.
         @lucas.sousa verifique os testes.
         `
         sendMessageRocket('@lucas.sousa', text)
