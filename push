@@ -9,10 +9,5 @@ ssh -t versionaplicativoderestaurante "\
     && npm run build  \
     && pm2 restart codificar --update-env  \
 "
-echo ""
-echo "http://version.aplicativoderestaurante.com.br:3000"
-    # && git pull \
-# ssh -t versionaplicativoderestaurante "cd codificar/codificar-next && npm run build && pm2 restart codificar"
-# ssh -t versionaplicativoderestaurante "cd codificar/codificar-next/ && cat .env"
 
-# # echo "test $1"
+echo "\n\nhttp://version.aplicativoderestaurante.com.br:3000\n\n"

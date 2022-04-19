@@ -16,7 +16,7 @@ export default function gitlab(req, res) {
         text = `Sucesso no pipeline - https://git.codificar.com.br/marketplace/web/-/pipelines/${pipelineId}
         @${user} seu commit está ok - ${commit}.
         `
-    } else {
+    } else if (status === 'failed') {
         text = `Erro no pipeline - https://git.codificar.com.br/marketplace/web/-/pipelines/${pipelineId}
         @${user} verificar seu commit - ${commit}.
         @lucas.sousa verifique os testes.
