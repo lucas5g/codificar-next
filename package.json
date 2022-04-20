@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "server": "nodemon backend/index.mjs"
+        "backend": "nodemon backend/index.mjs"
     },
     "dependencies": {
         "axios": "^0.26.1",
