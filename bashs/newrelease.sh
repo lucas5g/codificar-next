@@ -1,29 +1,38 @@
-!/bin/bash
+#!/bin/bash
 
-content=$(curl --header "Authorization: Bearer glpat-MxixEZyRu1aSFWcQ23gK" "https://git.codificar.com.br/api/v4/projects/238/repository/tags" | jq '.[0]' | jq '{name, created_at: .commit.created_at}')
+export $(cat ../.env | grep -v '#' | sed 's/\r$//' | awk '/=/ {print $1}' )
+
+content=$(curl --header "Authorization: Bearer "$GITLAB_KEY"" $GITLAB_URL_TAG | jq '.[0]' | jq '{name, created_at: .commit.created_at}')
 
 tagName=$(echo $content | jq '.name')
-tagName=2.13.8
+tagName=${tagName//'"'/''}
+
 tagCreated_at=$(echo $content | jq '.created_at')
 
-echo $tagCreated_at
-echo $tagName
+# echo $tagCreated_at
+# # echo ${tagName//'"'/''}
+# echo $tagName
+# exit 0
 
 # bash
 # #todos projetos atualmente
-projects=('moldeshopping' 'moldeautopecas' 'demomarketplace')
+projectsAab=(
+    moldeshopping
+    moldeautopecas
+    molde_restaurante
+    moldefarmacia
+)
 
 
-# ./auto -v $tagName -p ${projects[0]} -a apk
 
+cd ~/dev/automation/marketplace/marketplace-react
 
-cd ~/automation/marketplace/marketplace-react
-
-for project in ${projects[*]};
+for project in ${projectsAab[*]};
 do
-    echo $project
-    ./auto -v $tagName -p $project -a apk
-    sleep 3m    
+    echo "./auto -v $tagName -p $project -a aab"
+    ./auto -v $tagName -p $project -a aab
+    # echo $project
+    sleep 2m
 done;
 
 

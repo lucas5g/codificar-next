@@ -20,7 +20,11 @@ describe('login google', () => {
         cy.get('#submit').click()
             // cy.contains('Próxima').click()
 
-        cy.wait(2000)
-            // cy.visit('https://play.google.com/console/u/0/developers/5887817223763081215/app-list?onboardingflow=signup')
+        cy.reload()
+        cy.get('.button-content').click()
+        cy.get('.developer-icon').click()
+        cy.contains('Ache Local').click()
+
+        // cy.visit('https://play.google.com/console/u/0/developers/5887817223763081215/app-list?onboardingflow=signup')
     })
 })
