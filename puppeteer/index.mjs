@@ -1,6 +1,4 @@
 import puppeteer from 'puppeteer'
-import os from 'os'
-
 import { projects } from './projects.mjs'
 import { Bot } from './Bot.mjs';
 
@@ -182,7 +180,7 @@ const cookies = [{
     }
 ]
 
-//Main
+
 ;
 (async() => {
 
@@ -191,31 +189,12 @@ const cookies = [{
     const bot = new Bot(page)
 
     await page.setCookie(...cookies)
+    const { name: tag, created_at } = await bot.getInfoLastTag()
 
-    let timeWait = 0
+    await bot.uploadsApps({ projects, tag })
 
-    projects.map((project, index) => {
-        // timeWait = 12000 * index
-        timeWait = 2000 * index
+    await sleep(projects.length * 45000)
+    await browser.close()
 
-        setTimeout(() => {
-            console.log({ project })
-                // bot.uploadApk({
-                //     project: project.name,
-                //     release: '2.13.8',
-                //     url: project.url,
-                //     extension: project.extension || 'apk'
-
-            // })
-            console.log({ pleng: projects.length - 1, index })
-            console.log(projects.length - 1 === index)
-
-        }, timeWait)
-
-        return
-
-    })
-
-    await page.close()
 
 })();

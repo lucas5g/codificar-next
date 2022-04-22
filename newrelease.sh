@@ -20,17 +20,15 @@ getInfoTag(){
     
 }
 conditionalRunJob(){
-   
-    today=$(date +%Y-%m-%d)
     
-    if [ "$tagDate" == "$today" ]; then
+    today=$(date +%Y-%m-%d)
+    local action=$1
+    
+    if [ "$tagDate" == "$today" ] || [ "$action" == "force" ]; then
         echo "${newline}Boraaaa gerar apps${newline}"
     else
-        echo "${newline}Hojé não tem tag nova :)"
-        echo "Vamos aproveitar e limpar as coisas por aqui..."
-        rm -rf  ~/automation/marketplace/marketplace-react/sources
-        rm -rf ~/automation/marketplace/marketplace-react/releases
-
+        echo "${newline}Hoje não tem tag nova :)"
+        echo "----------------------------------"
         exit 0
     fi
     
@@ -46,11 +44,17 @@ buildApps(){
     echo "${bold}Descrição:$normal Gerar apps com extensão .$extension${newline}"
     
     cd ~/automation/marketplace/marketplace-react
-    
+    # folderReleaseExist="$HOME/automation/marketplace/marketplace-react/releases/$tagName"
+    folderReleaseExist="$PATH_AUTOMATION/releases/$tagName"
     for project in ${projects[@]};
     do
-        echo "./auto -v $tagName -p $project -a $extension"
-        ./auto -v $tagName -p $project -a $extension
+        if [ ! -d "$folderReleaseExist/$project" ]; then
+            echo "./auto -v $tagName -p $project -a $extension"
+            # echo "$folderReleaseExist/$project"
+            ./auto -v $tagName -p $project -a $extension
+        else
+            echo "$project-$tagName - Já tem essa release no seu pc"
+        fi
         sleep 2
     done;
     
@@ -58,16 +62,24 @@ buildApps(){
     
 }
 
-removeFolderSources(){
-    echo "${newline}${bold}Function:$normal removeFolderSources"
-    echo "${bold}Descrição: $normal Deletar a pasta sources${newline}"
-    cd ~/automation/marketplace/marketplace-react
-    rm -rf sources
-    echo "----------------------------------"
+
+
+
+deleteReleases(){
     
+    local clean=$1
+    
+    if [ "$clean" == "deleteReleases" ]; then
+        echo "${newline}${bold}Function:$normal deleteRelease"
+        echo "${bold}Descrição:$normal Deletar a pasta release e sources"
+        rm -rf  ~/automation/marketplace/marketplace-react/sources
+        rm -rf ~/automation/marketplace/marketplace-react/releases
+        exit 0
+    fi
 }
 
-
+#Passar variávies pelo terminal
+action=$1
 main(){
     #Algumas variáveiss :)
     newline=$'\n'
@@ -75,7 +87,7 @@ main(){
     bold=$(tput bold)
     normal=$(tput sgr0)
     
-    declare -a projectsAab=(
+    projectsAab=(
         moldeshopping
         moldeautopecas
         molde_restaurante
@@ -83,6 +95,7 @@ main(){
     )
     projectsApk=(
         demomarketplace
+        molde
     )
     
     
@@ -97,8 +110,9 @@ main(){
     
     echo "$newline $(date "+%H:%M - %d/%m")"
     
+    deleteReleases $action
     getInfoTag
-    conditionalRunJob
+    conditionalRunJob $action
     buildApps projectsAab aab
     buildApps projectsApk apk
     
