@@ -8,14 +8,23 @@ function sleep(delay) {
 }
 
 
+
 (async() => {
 
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
+    await page.setCookie(...cookies)
     const bot = new Bot(page)
 
-    await page.setCookie(...cookies)
+
+    /**
+     * login
+     */
+    ;
+    (async() => {
+        console.log('login')
+    })()
 
     const { name: tag, created_at } = await bot.getInfoLastTag()
         // await bot.uploadsApps({ projects, tag })
