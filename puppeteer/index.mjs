@@ -18,7 +18,6 @@ function sleep(delay) {
     await page.setCookie(...cookies)
     const bot = new Bot(page)
 
-
     /**
      * login
      */
