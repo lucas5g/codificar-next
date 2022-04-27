@@ -87,6 +87,7 @@ async function uploadApp({ project, tag }) {
 async function uploadApps({ projects, tag }) {
 
     let timeWait = 0
+
     projects.map((project, index) => {
         timeWait = 45000 * index
         setTimeout(async() => {
