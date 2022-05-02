@@ -23,7 +23,7 @@ export function IssuesColumn({ issues }) {
                         className={
                             `list-group-item list-group-item-action
                             ${issue.priority === 'Alta'  && `bg-danger`}
-                            ${issue.priority === 'Urgente' && `bg-primary`}
+                            ${issue.priority === 'Urgente' && `bg-info`}
                             ${!issue.assigned_to && `bg-warning`}
                             `                           
                         }
