@@ -19,6 +19,8 @@ export default function gitlab(req, res) {
         ${commit}.
         `
         sendMessageRocket(`@${username}`, text)
+        sendMessageRocket(`@lucas.sousa`, text)
+        
 
 
     } else if (status === 'failed') {
@@ -28,6 +30,8 @@ export default function gitlab(req, res) {
         @lucas.sousa verifique os testes.
         `
         sendMessageRocket(`@${username}`, text)
+        sendMessageRocket(`@lucas.sousa`, text)
+
     }
 
 
