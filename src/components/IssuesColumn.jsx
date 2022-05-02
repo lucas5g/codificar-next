@@ -6,7 +6,7 @@ export function IssuesColumn({ issues }) {
     return (
 
 
-        <div className="col-md mb-4">
+        <div className="col-lg mb-4">
             <h6>
                 {issues[0]?.status}
                 &nbsp;

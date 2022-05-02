@@ -102,6 +102,14 @@ export default function Issues() {
                         type="project"
                     />
 
+                     {/* <SelectFilter
+                        options={pr}
+                        name="Prioridades"
+                        changeSelected={setTrackersSelected}
+                        issues={issues}
+                        type="tracker"
+
+                    /> */}
                     <SelectFilter
                         options={trackers}
                         name="Tipos"

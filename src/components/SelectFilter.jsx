@@ -1,7 +1,7 @@
 export function SelectFilter({ options, name, changeSelected, issues, type }) {
     
     return (
-        <div className="col-md-4">
+        <div className="col-lg-4">
     
             <select
                 className="form-select mb-1"
