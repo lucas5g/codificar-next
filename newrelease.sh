@@ -7,13 +7,15 @@ getInfoTag(){
     tagName=$(echo $content | jq '.name')
     tagName=${tagName//'"'/''}
     # tagName="'$tagName'"
-    
+     
+   
     
     tagCreated_at=$(echo $content | jq '.created_at')
     tagCreated_at=${tagCreated_at//'"'/''}
-    
-    tagDate=$(date -d $tagCreated_at +%Y-%m-%d)
-    
+
+    # tagDate=$(date -d $tagCreated_at +%Y-%m-%d)
+    tagDate=${tagCreated_at:0:10}  
+
     echo "${bold}Data de criação:$normal $tagDate"
     echo "${bold}Nome:$normal $tagName"
     echo "----------------------------------"
@@ -51,7 +53,7 @@ buildApps(){
         if [ ! -d "$folderReleaseExist/$project" ]; then
             echo "./auto -v $tagName -p $project -a $extension"
             # echo "$folderReleaseExist/$project"
-            ./auto -v $tagName -p $project -a $extension
+            # ./auto -v $tagName -p $project -a $extension
         else
             echo "$project-$tagName - Já tem essa release no seu pc"
         fi
@@ -95,6 +97,8 @@ main(){
     projectsApk=(
         demomarketplace
         molde
+        pizzapoint
+        medicolappmarketplace
     )
     
     
