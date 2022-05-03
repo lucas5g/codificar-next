@@ -1,4 +1,3 @@
-#!/bin/bash
 
 getInfoTag(){
     echo "${newline}${bold}Function:$normal getInfoTag"
@@ -7,15 +6,15 @@ getInfoTag(){
     tagName=$(echo $content | jq '.name')
     tagName=${tagName//'"'/''}
     # tagName="'$tagName'"
-     
-   
+    
+    
     
     tagCreated_at=$(echo $content | jq '.created_at')
     tagCreated_at=${tagCreated_at//'"'/''}
-
+    
     # tagDate=$(date -d $tagCreated_at +%Y-%m-%d)
-    tagDate=${tagCreated_at:0:10}  
-
+    tagDate=${tagCreated_at:0:10}
+    
     echo "${bold}Data de criação:$normal $tagDate"
     echo "${bold}Nome:$normal $tagName"
     echo "----------------------------------"
@@ -36,9 +35,30 @@ conditionalRunJob(){
     
 }
 
+
+buildApp(){
+    project=$1
+    extension=$2
+
+    cd ~/automation/marketplace/marketplace-react
+    # folderReleaseExist="$HOME/automation/marketplace/marketplace-react/releases/$tagName"
+    folderReleaseExist="$PATH_AUTOMATION/releases/$tagName"
+    
+    if [ ! -d "$folderReleaseExist/$project" ]; then
+        echo "./auto -v $tagName -p $project -a $extension"
+        # echo "$folderReleaseExist/$project"
+        ./auto -v $tagName -p $project -a $extension
+    else
+        echo "$project-$tagName - Já tem essa release no seu pc"
+    fi
+    sleep 2
+}
+#array nao funciona no mac :(
 buildApps(){
     
     # projects=${1[@]}
+    # echo ${1[@]}
+    # exit
     local -n projects=$1
     extension=$2
     
@@ -88,13 +108,13 @@ main(){
     bold=$(tput bold)
     normal=$(tput sgr0)
     
-    projectsAab=(
+    declare -a projectsAab=(
         moldeshopping
         moldeautopecas
         molde_restaurante
         moldefarmacia
     )
-    projectsApk=(
+    declare -a projectsApk=(
         demomarketplace
         molde
         pizzapoint
@@ -116,8 +136,20 @@ main(){
     deleteReleases $action
     getInfoTag
     conditionalRunJob $action
-    buildApps projectsAab aab
-    buildApps projectsApk apk
+    # buildApps projectsAab aab
+    # buildApps projectsApk apk
+    
+    #Passar os clientes apk
+    buildApp pizzapoint            apk
+    buildApp demomarketplace       apk
+    buildApp molde                 apk 
+    buildApp medicolappmarketplace apk
+
+    #Cliente aab
+    buildApp moldeshopping     aab
+    buildApp moldeautopecas    aab
+    buildApp molde_restaurante aab
+    buildApp moldefarmacia     aab
     
 }
 main
