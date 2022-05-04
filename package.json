@@ -9,7 +9,9 @@
         "lint": "next lint",
         "backend": "nodemon backend/index.mjs",
         "bot": "nodemon puppeteer/index.mjs",
-        "newreleases": "nodemon puppeteer/newreleases.mjs"
+        "newreleases": "nodemon puppeteer/newreleases.mjs",
+        "buildApp": "nodemon scripts/buildApp.js"
+
     },
     "dependencies": {
         "axios": "^0.26.1",
