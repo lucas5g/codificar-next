@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         console.log(text)
         console.log(devUserRocket(issue))
         sendMessageRocket('@lucas.sousa', text)
-        sendMessageRocket(devUserRocket(issue))
+        sendMessageRocket(devUserRocket(issue), text)
     })
 
     res.json({
