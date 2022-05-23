@@ -46,6 +46,7 @@ export const devUserRocket = (user) => {
 
     const name = user.assigned_to ? user.assigned_to.name : user.name
         // return "name " + name
+        // console.log(name.replace("  ", " "))
     if (!name) {
         return 'NÃO ATRIBUÍDA'
     }
@@ -69,11 +70,15 @@ export const devUserRocket = (user) => {
     }
 
     const userRocket = '@' + name
+        .replace("  ", " ")
         .split(' ')
         .slice(0, 2)
         .join('.')
         .toLowerCase()
         .replace('ç', 'c')
+        .replace('í', 'i')
+
+    // console.log(userRocket)
 
 
     return userRocket

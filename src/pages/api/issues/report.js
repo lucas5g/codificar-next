@@ -1,6 +1,8 @@
 import { apiRedmine } from "../../../services/api"
 import { sendMessageRocket, devUserRocket } from "../../../helpers/index.js"
 import moment from "moment-timezone"
+import { json } from "express/lib/response"
+import { text } from "express"
 
 export default async function report(req, res) {
 
@@ -51,12 +53,14 @@ export default async function report(req, res) {
     let cont = 0
 
     times.map((time, index) => (cont++,
-        textReport += `
+            textReport += `
             ${cont + data.issues.length} - ${time.id} - ${time.comments}
             ${time.user} - *${time.project}*\n`
 
-    ))
+        ))
+        // console.log(textReport)
 
+    // return res.send(textReport)
 
     sendMessageRocket(process.env.ROCKET_CHANNEL, textReport)
 
