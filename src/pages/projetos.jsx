@@ -23,7 +23,7 @@ export default function projectos({ projects }) {
                                     <td>
                                         <a href={project.url}
                                             target="_blank"
-                                            // rel="noopener noreferrer"
+                                            rel="noopener noreferrer"
                                             className='btn btn-outline-success'
                                             >
                                             {project.version}
