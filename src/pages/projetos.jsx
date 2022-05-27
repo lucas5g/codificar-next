@@ -7,7 +7,7 @@ export default function projectos({ projects }) {
 
             <div className="row mt-5 d-flex justify-content-center ">
                 <div className="col-lg-6">
-                    <table class="table">
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
