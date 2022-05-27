@@ -23,6 +23,11 @@ export function Navbar() {
                                 <a className="nav-link text-white">Issues</a>
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link href='/projetos'>
+                                <a className="nav-link text-white">Projetos</a>
+                            </Link>
+                        </li>
 
                         {/* <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
