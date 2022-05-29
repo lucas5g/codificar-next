@@ -1,7 +1,7 @@
 import axios from 'axios'
-export default function projectos({ projects, lastTagWeb }) {
+export default function projectos({ projects, lastTagWeb, lastTagReact }) {
     return (
-        <div className="container mt-5">
+        <div className="container mt-5 mb-3">
             <h1>Projetos</h1>
             <hr />
 
@@ -13,6 +13,8 @@ export default function projectos({ projects, lastTagWeb }) {
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Portal</th>
+                                <th scope="col">IOS</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -23,14 +25,26 @@ export default function projectos({ projects, lastTagWeb }) {
                                     <th scope="row">{index + 1}</th>
                                     <td>{project.name}</td>
                                     <td>
-                                        <a href={project.url}
+                                        <a href={project.portal}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${project.version === lastTagWeb ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${project.versionWeb === lastTagWeb ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                             >
-                                            {project.version}
+                                            {project.versionWeb}
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        <a href={project.ios}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`btn 
+                                                ${project.versionIos === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
+                                            `}
+                                            >
+                                            {project.versionIos}
                                         </a>
 
                                     </td>
@@ -53,14 +67,18 @@ export async function getServerSideProps(context) {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITLAB_KEY}`
         }
     })
+    const { data: react } = await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
+        headers:{
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITLAB_KEY}`
+        }
+    })
+    // console.log(react[0].name)
 
     return {
         props: {
             projects,
-            lastTagWeb: data[0].name
-
+            lastTagWeb: data[0].name,
+            lastTagReact: react[0].name
         },
-
-
     }
 }
