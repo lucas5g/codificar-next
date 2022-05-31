@@ -43,6 +43,7 @@ export default function Projects() {
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Portal</th>
+                                <th scope="col">Android</th>
                                 <th scope="col">IOS</th>
 
                             </tr>
@@ -53,7 +54,7 @@ export default function Projects() {
                             {projects.map((project, index) => (
                                 <tr key={project.name}>
                                     <th scope="row">{index + 1}</th>
-                                    <td>{project.name}</td>
+                                    <td>{project.name.upp}</td>
                                     <td>
                                         <a href={project.portal}
                                             target="_blank"
@@ -63,6 +64,18 @@ export default function Projects() {
                                             `}
                                         >
                                             {project.versionWeb}
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        <a href={project.android}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`btn 
+                                                ${project.versionAndroid === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
+                                            `}
+                                        >
+                                            {project.versionAndroid}
                                         </a>
 
                                     </td>
