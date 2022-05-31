@@ -1,5 +1,15 @@
 import axios from 'axios'
+import { useEffect } from 'react'
 export default function projectos({ projects, lastTagWeb, lastTagReact }) {
+
+    useEffect(() => {
+
+        (async() => {
+            const {data: test} = await axios.get('http://version.aplicativoderestaurante.com.br:8080/projects')
+            console.log({ test})
+
+        })()
+    }, [])
     return (
         <div className="container mt-5 mb-3">
             <h1>Projetos</h1>
