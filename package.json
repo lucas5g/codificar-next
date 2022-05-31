@@ -10,7 +10,8 @@
         "backend": "nodemon backend/index.mjs",
         "bot": "nodemon puppeteer/index.mjs",
         "newreleases": "nodemon puppeteer/newreleases.mjs",
-        "buildApp": "nodemon scripts/buildApp.js"
+        "buildApp": "nodemon scripts/buildApp.js",
+        "server":"nodemon backend/server.mjs"
 
     },
     "dependencies": {
