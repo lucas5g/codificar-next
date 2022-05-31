@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect } from 'react'
-export default function projectos({ projects, lastTagWeb, lastTagReact }) {
+export default function Projects({ projects, lastTagWeb, lastTagReact }) {
 
     useEffect(() => {
 
