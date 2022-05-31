@@ -1,19 +1,37 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-export default function Projects({ projects, lastTagWeb, lastTagReact }) {
+import Head from 'next/head'
+import { TextCenter } from '../components/TextCenter'
+import { useFetch } from "../hooks/useFetch"
 
-   const [test, setTest] = useState('qwe')
-    useEffect(() => {
+export default function Projects() {
 
-        (async() => {
-            const {data: test} = await axios.get('http://version.aplicativoderestaurante.com.br:8080/projects')
-            console.log({ test})
-            setTest(test)
 
-        })()
-    }, [])
+    const { data, error } = useFetch('/projetos')
+
+    if (error) {
+        return (
+            <TextCenter text="Erro ao conectar com o servidor :(" height="80vh" />
+
+        )
+    }
+    if (!data) {
+        return (
+            <>
+                <Head>
+                    <title>Cods | Projetos</title>
+                </Head>
+                <TextCenter text="Carregando..." height="85vh" />
+            </>
+        )
+
+    }
+    const { projects, lastTagReact, lastTagWeb } = data
+
+
     return (
         <div className="container mt-5 mb-3">
+            <Head>
+                <title>Cods | Projetos</title>
+            </Head>
             <h1>Projetos</h1>
             <hr />
 
@@ -26,7 +44,7 @@ export default function Projects({ projects, lastTagWeb, lastTagReact }) {
                                 <th scope="col">Name</th>
                                 <th scope="col">Portal</th>
                                 <th scope="col">IOS</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +61,7 @@ export default function Projects({ projects, lastTagWeb, lastTagReact }) {
                                             className={`btn 
                                                 ${project.versionWeb === lastTagWeb ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
-                                            >
+                                        >
                                             {project.versionWeb}
                                         </a>
 
@@ -55,7 +73,7 @@ export default function Projects({ projects, lastTagWeb, lastTagReact }) {
                                             className={`btn 
                                                 ${project.versionIos === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
-                                            >
+                                        >
                                             {project.versionIos}
                                         </a>
 
@@ -70,27 +88,3 @@ export default function Projects({ projects, lastTagWeb, lastTagReact }) {
     )
 }
 
-
-export async function getServerSideProps(context) {
-
-    const { data:projects } = await axios.get('http://version.aplicativoderestaurante.com.br:8080/projects')
-    const { data } = await axios.get(process.env.NEXT_PUBLIC_GITLAB_URL_TAG, {
-        headers:{
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITLAB_KEY}`
-        }
-    })
-    const { data: react } = await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
-        headers:{
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITLAB_KEY}`
-        }
-    })
-    // console.log(react[0].name)
-
-    return {
-        props: {
-            projects,
-            lastTagWeb: data[0].name,
-            lastTagReact: react[0].name
-        },
-    }
-}
