@@ -1,12 +1,14 @@
 import axios from 'axios'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 export default function Projects({ projects, lastTagWeb, lastTagReact }) {
 
+   const [test, setTest] = useState('qwe')
     useEffect(() => {
 
         (async() => {
             const {data: test} = await axios.get('http://version.aplicativoderestaurante.com.br:8080/projects')
             console.log({ test})
+            setTest(test)
 
         })()
     }, [])
