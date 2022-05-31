@@ -54,7 +54,7 @@ export default function Projects() {
                             {projects.map((project, index) => (
                                 <tr key={project.name}>
                                     <th scope="row">{index + 1}</th>
-                                    <td>{project.name.upp}</td>
+                                    <td>{project.nama}</td>
                                     <td>
                                         <a href={project.portal}
                                             target="_blank"
