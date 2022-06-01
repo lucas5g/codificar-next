@@ -10,8 +10,8 @@ ssh -t versionaplicativoderestaurante "\
     && nvm use 16 \
     && npm install \
     && npm run build  \
-    && pm2 restart codificar-next --update-env  \
-    && pm2 restart codificar-backend --update-env
+    && pm2 restart cods-next --update-env  \
+    && pm2 restart node-cron --update-env
 "
 
 echo "\n\nhttp://version.aplicativoderestaurante.com.br:3000\n\n"

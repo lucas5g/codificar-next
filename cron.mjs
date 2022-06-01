@@ -1,11 +1,5 @@
 import cron from 'node-cron'
-import dotenv from "dotenv";
-import { projectsVersion } from '../bot/projects-version.mjs'
 import axios from 'axios';
-
-
-dotenv.config();
-
 
 cron.schedule('*/30 9,19 * * 1-5', () => {
     console.log('Update version projects')
@@ -23,6 +17,7 @@ cron.schedule('*/30 9,19 * * 1-5', () => {
 
 
 (async() => {
+    console.log('Cron node')
 
     // axios.get('http://localhost:3000/api/projetos/update-info')
 
