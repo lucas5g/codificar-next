@@ -1,7 +1,7 @@
 import cron from 'node-cron'
 import axios from 'axios';
 
-cron.schedule('*/30 9,19 * * 1-5', () => {
+cron.schedule('10 9-21 * * 1-5', () => {
     console.log('Update version projects')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info')
         // projectsVersion()
