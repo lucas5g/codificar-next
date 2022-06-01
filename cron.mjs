@@ -7,7 +7,7 @@ cron.schedule('*/30 9,19 * * 1-5', () => {
         // projectsVersion()
 });
 
-cron.schedule('2 12,15 * * *', () => {
+cron.schedule('9 12,15 * * *', () => {
     console.log("Cron log test")
 });
 
