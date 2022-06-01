@@ -7,6 +7,11 @@ cron.schedule('*/30 9,19 * * 1-5', () => {
         // projectsVersion()
 });
 
+cron.schedule('59 11,14 * * *', () => {
+    console.log("Cron log test")
+});
+
+
 
 // import { pointRecord } from '../bot/point-record.js'
 // cron.schedule('20 9,14 * * 1-5', () => {
@@ -18,8 +23,8 @@ cron.schedule('*/30 9,19 * * 1-5', () => {
 
 (async() => {
     console.log('Cron node')
-
-    // axios.get('http://localhost:3000/api/projetos/update-info')
+    console.log(new Date())
+        // axios.get('http://localhost:3000/api/projetos/update-info')
 
     // const projects = await prisma.project.findMany()
 
