@@ -11,10 +11,10 @@
         "bot": "nodemon puppeteer/index.mjs",
         "newreleases": "nodemon puppeteer/newreleases.mjs",
         "buildApp": "nodemon scripts/buildApp.js",
-        "server":"nodemon backend/server.mjs"
-
+        "server": "nodemon backend/index.mjs"
     },
     "dependencies": {
+        "@prisma/client": "3.14.0",
         "axios": "^0.26.1",
         "dotenv": "^16.0.0",
         "express": "^4.17.3",
@@ -30,6 +30,7 @@
     },
     "devDependencies": {
         "eslint": "8.13.0",
-        "eslint-config-next": "12.1.5"
+        "eslint-config-next": "12.1.5",
+        "prisma": "^3.14.0"
     }
 }

@@ -1,16 +1,19 @@
 import axios from 'axios'
+import { prisma } from '../../../../prisma/index.mjs'
 
 export default async function projects(req, res) {
 
+    const projects = await prisma.project.findMany({
+        orderBy: [{ name: 'asc' }]
+    })
 
-    const { data:projects } = await axios.get('http://version.aplicativoderestaurante.com.br:8080/projects')
-    const { data:portal } = await axios.get(process.env.GITLAB_URL_TAG, {
-        headers:{
+    const { data: portal } = await axios.get(process.env.GITLAB_URL_TAG, {
+        headers: {
             Authorization: `Bearer ${process.env.GITLAB_KEY}`
         }
     })
     const { data: react } = await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
-        headers:{
+        headers: {
             Authorization: `Bearer ${process.env.GITLAB_KEY}`
         }
     })
