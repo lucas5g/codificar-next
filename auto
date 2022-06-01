@@ -4,6 +4,7 @@ git commit -m "$1"
 git push
 ssh -t versionaplicativoderestaurante "\
     cd codificar/codificar-next/ \
+    && git reset --hard \
     && git pull \
     && source ~/.nvm/nvm.sh \
     && nvm use 16 \
