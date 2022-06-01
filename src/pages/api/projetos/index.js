@@ -1,11 +1,8 @@
 import axios from 'axios'
-import { prisma } from '../../../../prisma/index.mjs'
 
 export default async function projects(req, res) {
 
-    const projects = await prisma.project.findMany({
-        orderBy: [{ name: 'asc' }]
-    })
+    const { data: projects } = await axios.get('http://version.aplicativoderestaurante.com.br:8080/projects')
 
     const { data: portal } = await axios.get(process.env.GITLAB_URL_TAG, {
         headers: {
