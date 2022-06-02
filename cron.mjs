@@ -7,23 +7,29 @@ cron.schedule('10 9-21 * * 1-5', () => {
         // projectsVersion()
 });
 
-const minute = 18
-cron.schedule(`${minute} 4 * * *`, () => {
+const minute = 32
+const time = minute => `*/${minute} * * * *`
+
+cron.schedule(time(minute), () => {
+
+    // cron.schedule('* * * * *', () => {
     console.log('cron portal')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/portal')
-
 })
-cron.schedule(`${minute + 1} 4 * * *`, () => {
+
+
+cron.schedule(time(minute + 1), () => {
     console.log('cron ios')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/ios')
 })
-cron.schedule(`${minute + 2} 4 * * *`, () => {
+
+cron.schedule(time(minute + 2), () => {
     console.log('cron android')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/android')
 })
 
 
-cron.schedule('9 12,15 * * *', () => {
+cron.schedule('22 1,4 * * *', () => {
     console.log("Cron log test")
 });
 
