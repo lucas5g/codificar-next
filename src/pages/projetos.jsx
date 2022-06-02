@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Spinner } from '../components/Spinner'
 import { TextCenter } from '../components/TextCenter'
 import { useFetch } from "../hooks/useFetch"
 
@@ -19,7 +20,7 @@ export default function Projects() {
                 <Head>
                     <title>Cods | Projetos</title>
                 </Head>
-                <TextCenter text="Carregando..." height="85vh" />
+                <Spinner />
             </>
         )
 
@@ -28,7 +29,7 @@ export default function Projects() {
 
 
     return (
-        <div className="container mt-5 mb-3">
+        <div className="container-fluid mt-5 mb-3">
             <Head>
                 <title>Cods | Projetos</title>
             </Head>

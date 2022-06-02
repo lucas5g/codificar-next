@@ -2,6 +2,7 @@ import Head from "next/head"
 import { useEffect, useState } from "react"
 import { IssuesColumn } from "../components/IssuesColumn"
 import { SelectFilter } from "../components/SelectFilter"
+import { Spinner } from "../components/Spinner"
 import { TextCenter } from "../components/TextCenter"
 // import { delay } from "../helpers"
 import { useFetch } from "../hooks/useFetch"
@@ -81,6 +82,15 @@ export default function Issues() {
         )
     }
 
+    if (!data) {
+        return (
+            <>
+                <Head> Cods | Issues</Head>
+                <Spinner />
+            </>
+        )
+    }
+
     return (
 
 
@@ -88,21 +98,18 @@ export default function Issues() {
             <Head>
                 <title>Cods | Issues</title>
             </Head>
-            {!data &&
-                <TextCenter text="Carregando..." height="60vh" />
-            }
 
-            {data &&
-                <div className="row mb-4">
-                    <SelectFilter
-                        options={projects}
-                        name="Projetos"
-                        changeSelected={setProjectSelected}
-                        issues={issues}
-                        type="project"
-                    />
 
-                     {/* <SelectFilter
+            <div className="row mb-4">
+                <SelectFilter
+                    options={projects}
+                    name="Projetos"
+                    changeSelected={setProjectSelected}
+                    issues={issues}
+                    type="project"
+                />
+
+                {/* <SelectFilter
                         options={pr}
                         name="Prioridades"
                         changeSelected={setTrackersSelected}
@@ -110,25 +117,24 @@ export default function Issues() {
                         type="tracker"
 
                     /> */}
-                    <SelectFilter
-                        options={trackers}
-                        name="Tipos"
-                        changeSelected={setTrackersSelected}
-                        issues={issues}
-                        type="tracker"
+                <SelectFilter
+                    options={trackers}
+                    name="Tipos"
+                    changeSelected={setTrackersSelected}
+                    issues={issues}
+                    type="tracker"
 
-                    />
-                    <SelectFilter
-                        options={assigneds}
-                        name="Responsáveis"
-                        changeSelected={setAssignedSelected}
-                        issues={issues}
-                        type="assigned_to"
+                />
+                <SelectFilter
+                    options={assigneds}
+                    name="Responsáveis"
+                    changeSelected={setAssignedSelected}
+                    issues={issues}
+                    type="assigned_to"
 
-                    />
+                />
 
-                </div>
-            }
+            </div>
 
             {noResult &&
                 <TextCenter text="Nada encontrado :(" height="60vh" />

@@ -6,9 +6,10 @@ export default function Home() {
             <Head>
                 <title>Cods | Home</title>
             </Head>
-            <h3>Cods Helpers</h3>
+            <h1>Cods Helpers</h1>
+            <hr />
             <h5>
-                Ferramento Para ajudar nas tarefas diárias
+                Aplicação para ajudar nas tarefas diárias.
             </h5>
 
 
