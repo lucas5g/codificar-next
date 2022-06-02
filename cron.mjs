@@ -7,14 +7,14 @@ cron.schedule('10 9-21 * * 1-5', () => {
         // projectsVersion()
 });
 
-cron.schedule('5 4 * * *', () => {
+cron.schedule('10 4 * * *', () => {
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/portal')
 
 })
-cron.schedule('6 4 * * *', () => {
+cron.schedule('11 4 * * *', () => {
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/ios')
 })
-cron.schedule('7 4 * * *', () => {
+cron.schedule('12 4 * * *', () => {
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/android')
 })
 
