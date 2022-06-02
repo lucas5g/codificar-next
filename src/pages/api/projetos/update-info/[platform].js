@@ -129,13 +129,12 @@ async function getInfoIos({ ios, name, index }) {
         // console.log(ios)
     await page.waitForSelector('p.whats-new__latest__version')
     const infoIos = await page.evaluate(() => {
-        return {
-            tag: document.querySelector('p.whats-new__latest__version').textContent.replace('Versão ', '').replace('Version ', '')
+            return {
+                tag: document.querySelector('p.whats-new__latest__version').textContent.replace('Versão ', '').replace('Version ', '')
 
-        }
-    })
-    page.screenshot()
-    await page.screenshot({ path: `./screenshots/${name}.png` })
+            }
+        })
+        // await page.screenshot({ path: `./screenshots/${name}.png` })
     await browser.close();
     console.log(`${index + 1} ${name} - ${infoIos.tag}`)
     return infoIos

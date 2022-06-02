@@ -7,7 +7,7 @@ cron.schedule('10 9-21 * * 1-5', () => {
         // projectsVersion()
 });
 
-const minute = 35
+const minute = 40
 const time = minute => `*/${minute} * * * *`
 
 cron.schedule(time(minute), () => {
