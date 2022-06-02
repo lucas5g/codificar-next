@@ -7,7 +7,7 @@ cron.schedule('10 9-21 * * 1-5', () => {
         // projectsVersion()
 });
 
-const minute = 16
+const minute = 18
 cron.schedule(`${minute} 4 * * *`, () => {
     console.log('cron portal')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/portal')
