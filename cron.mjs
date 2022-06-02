@@ -7,7 +7,7 @@ cron.schedule('10 9-21 * * 1-5', () => {
         // projectsVersion()
 });
 
-cron.schedule('10 4 * * *', () => {
+cron.schedule('12 4 * * *', () => {
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/portal')
 
 })
