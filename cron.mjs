@@ -3,9 +3,21 @@ import axios from 'axios';
 
 cron.schedule('10 9-21 * * 1-5', () => {
     console.log('Update version projects')
-    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info')
+        // axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info')
         // projectsVersion()
 });
+
+cron.schedule('5 4 * * *', () => {
+    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/portal')
+
+})
+cron.schedule('6 4 * * *', () => {
+    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/ios')
+})
+cron.schedule('7 4 * * *', () => {
+    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/android')
+})
+
 
 cron.schedule('9 12,15 * * *', () => {
     console.log("Cron log test")
