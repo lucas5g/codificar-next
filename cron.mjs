@@ -1,13 +1,13 @@
 import cron from 'node-cron'
 import axios from 'axios';
 
-cron.schedule('10 9-21 * * 1-5', () => {
-    console.log('Update version projects')
-        // axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info')
-        // projectsVersion()
-});
+// cron.schedule('10 9-21 * * 1-5', () => {
+//     console.log('Update version projects')
+//         // axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info')
+//         // projectsVersion()
+// });
 
-const minute = 40
+const minute = 50
 const time = minute => `*/${minute} * * * *`
 
 cron.schedule(time(minute), () => {

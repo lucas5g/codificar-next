@@ -73,7 +73,7 @@ export default async function handler(req, res) {
 
 async function getInfoPortal({ portal, name, index }) {
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         args: [
             '--no-sandbox',
         ]
