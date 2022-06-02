@@ -13,7 +13,7 @@ cron.schedule(`${minute} 4 * * *`, () => {
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/portal')
 
 })
-cron.schedule(`${minut + 1} 4 * * *`, () => {
+cron.schedule(`${minute + 1} 4 * * *`, () => {
     console.log('cron ios')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/ios')
 })
