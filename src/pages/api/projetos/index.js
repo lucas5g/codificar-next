@@ -4,7 +4,12 @@ import { prisma } from '../../../../prisma/index.mjs'
 export default async function projects(req, res) {
 
     const projects = await prisma.project.findMany({
-        orderBy: { name: 'asc' }
+        orderBy: { name: 'asc' },
+        where: {
+            status: {
+                equals: true
+            }
+        }
     })
 
     const { data: portal } = await axios.get(process.env.GITLAB_URL_TAG, {
