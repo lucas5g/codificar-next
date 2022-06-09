@@ -8,7 +8,7 @@ import axios from 'axios';
 // });
 
 const minute = 5
-const time = minute => `*/${minute} * * * *`
+const time = minute => `*/${minute} 8-23 * * 1-5`
 
 cron.schedule(time(minute), () => {
 
