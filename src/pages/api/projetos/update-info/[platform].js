@@ -34,6 +34,9 @@ export default async function handler(req, res) {
             where: {
                 NOT: {
                     versionWeb: lastTagWeb
+                },
+                status: {
+                    equals: true
                 }
             }
         })
@@ -68,6 +71,9 @@ export default async function handler(req, res) {
             where: {
                 NOT: {
                     versionIos: lastTagReact
+                },
+                status: {
+                    equals: true
                 }
             }
         })
@@ -97,6 +103,9 @@ export default async function handler(req, res) {
             where: {
                 NOT: {
                     versionAndroid: lastTagReact
+                },
+                status: {
+                    equals: true
                 }
             }
         })
