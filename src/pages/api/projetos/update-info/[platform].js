@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         })
 
         console.log('Total projects: ' + projects.length)
-        console.log({ projects })
+            // console.log({ projects })
             // return
 
         projects.map(async(project, index) => {
@@ -77,6 +77,7 @@ export default async function handler(req, res) {
                 }
             }
         })
+        console.log('Total projects: ' + projects.length)
 
         projects.map(async(project, index) => {
             setTimeout(async() => {
@@ -109,6 +110,8 @@ export default async function handler(req, res) {
                 }
             }
         })
+        console.log('Total projects: ' + projects.length)
+
         projects.map(async(project, index) => {
             setTimeout(async() => {
                 const infoAndroid = await getInfoAndroid({ android: project.android, name: project.name, index })
