@@ -18,12 +18,12 @@ cron.schedule(time(minute), () => {
 })
 
 
-cron.schedule(time(minute + 5), () => {
+cron.schedule(time(minute + 2), () => {
     console.log('cron ios')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/ios')
 })
 
-cron.schedule(time(minute + 10), () => {
+cron.schedule(time(minute + 4), () => {
     console.log('cron android')
     axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/android')
 })
