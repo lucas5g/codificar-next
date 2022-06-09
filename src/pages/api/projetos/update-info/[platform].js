@@ -1,3 +1,4 @@
+import axios from 'axios';
 import puppeteer from 'puppeteer';
 
 import { prisma } from "../../../../../prisma/index.mjs"
@@ -5,16 +6,41 @@ import { prisma } from "../../../../../prisma/index.mjs"
 export default async function handler(req, res) {
 
     const { platform } = req.query
-    const projects = await prisma.project.findMany({
-        orderBy: [{
-            name: 'asc'
-        }],
+    const { data: portal } = await axios.get(process.env.GITLAB_URL_TAG, {
+        headers: {
+            Authorization: `Bearer ${process.env.GITLAB_KEY}`
+        }
+    })
+    const { data: react } = await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
+        headers: {
+            Authorization: `Bearer ${process.env.GITLAB_KEY}`
+        }
     })
 
-    console.log('Total projects: ' + projects.length)
+    const lastTagWeb = portal[0].name
+    const lastTagReact = react[0].name
+
+
+
+
     console.log(`Atualizando as informações do ${platform}`)
 
     if (platform === 'portal') {
+
+        const projects = await prisma.project.findMany({
+            orderBy: [{
+                name: 'asc'
+            }],
+            where: {
+                NOT: {
+                    versionWeb: lastTagWeb
+                }
+            }
+        })
+
+        console.log('Total projects: ' + projects.length)
+        console.log({ projects })
+            // return
 
         projects.map(async(project, index) => {
             setTimeout(async() => {
@@ -35,6 +61,17 @@ export default async function handler(req, res) {
     }
 
     if (platform === 'ios') {
+        const projects = await prisma.project.findMany({
+            orderBy: [{
+                name: 'asc'
+            }],
+            where: {
+                NOT: {
+                    versionIos: lastTagReact
+                }
+            }
+        })
+
         projects.map(async(project, index) => {
             setTimeout(async() => {
 
@@ -53,6 +90,16 @@ export default async function handler(req, res) {
     }
 
     if (platform === 'android') {
+        const projects = await prisma.project.findMany({
+            orderBy: [{
+                name: 'asc'
+            }],
+            where: {
+                NOT: {
+                    versionAndroid: lastTagReact
+                }
+            }
+        })
         projects.map(async(project, index) => {
             setTimeout(async() => {
                 const infoAndroid = await getInfoAndroid({ android: project.android, name: project.name, index })
