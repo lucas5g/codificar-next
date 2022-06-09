@@ -1,17 +1,42 @@
-#bash
-git add .
-git commit -m "$1"
-git push
-ssh -t versionaplicativoderestaurante "\
-    cd codificar/codificar-next/ \
-    && git reset --hard \
-    && git pull \
-    && source ~/.nvm/nvm.sh \
-    && nvm use 16 \
-    && npm install \
-    && npm run build  \
-    && pm2 restart cods-next --update-env  \
-    && pm2 restart node-cron --update-env
-"
+#!/bin/bash
+command=$1
+message=$2
 
-echo "\n\nhttp://version.aplicativoderestaurante.com.br:3000\n\n"
+push(){
+    
+    if [ "$1" == "push" ]; then
+        git add .
+        git commit -m "$2"
+        git push
+        ssh -t versionaplicativoderestaurante "\
+            cd codificar/codificar-next/ \
+            && git reset --hard \
+            && git pull \
+            && source ~/.nvm/nvm.sh \
+            && nvm use 16 \
+            && npm install \
+            && npm run build  \
+            && pm2 restart cods-next --update-env  \
+            && pm2 restart node-cron --update-env
+        "
+        
+        echo "\n\nhttp://version.aplicativoderestaurante.com.br:3000\n\n"
+        exit 0
+    fi
+    
+}
+
+connect(){
+    if [ "$1" == "connect" ]; then
+        cd ~/automation/marketplace/marketplace-web
+        ./auto versin versionmarketplace test
+        exit 0
+    fi
+    
+}
+
+main(){
+    push $command "$message"
+    connect $command
+}
+main
