@@ -33,6 +33,19 @@ export default async function projects(req, res) {
 
         const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status } = req.body
 
+        if (!name || !ios || !android) {
+            return res.status(401).json({
+                msg: 'Todos os campos são obrigatórios'
+            })
+        }
+
+        const projectNameExist = await prisma.project.findUnique({ where: { name } })
+
+        if (projectNameExist) {
+            return res.status(401).json({
+                msg: 'Já existe um projeto com este nome.'
+            })
+        }
         const project = await prisma.project.create({
             data: {
                 name,
@@ -44,10 +57,6 @@ export default async function projects(req, res) {
                 versionAndroid,
                 status: status === 'true' ? true : false
             },
-            select: {
-                id: true
-
-            }
         })
 
         return res.json(project)
