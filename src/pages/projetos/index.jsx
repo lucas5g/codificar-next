@@ -179,7 +179,7 @@ export default function Project() {
                         <Form
                             project={project}
                             setProject={setProject}
-                            projects={project}
+                            projects={projects}
                             setProjects={setProjects}
                         />
                     </div>
@@ -216,10 +216,18 @@ function Form({ project, setProject, projects, setProjects }) {
                 .then(res => {
                     console.log(res.data)
 
+                    const updateProjects = projects.map( p => {
+                        if(p.id === project.id ){
+                            return project
+                        }
+                        return p
+                    })
+
+                    setProjects(updateProjects)
 
                 })
                 .catch(error => {
-                    console.log(error.response)
+                    console.log(error)
                     alert('Erro ao atualizar')
                     location.reload()
                 })
