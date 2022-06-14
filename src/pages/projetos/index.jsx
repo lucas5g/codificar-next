@@ -56,7 +56,7 @@ export default function Project() {
                     <button className='btn btn-outline-success'
                         onClick={() => {
                             setUpdate(!update)
-                            console.log('editar')
+                           
 
                         }}>
                         {update ? 'Voltar' : 'Editar'}
@@ -197,8 +197,6 @@ function Form({ project, setProject, projects, setProjects }) {
     function handleChange(event) {
         const { name, value } = event.target
 
-        console.log({ name, value })
-
         setProject({
             ...project,
             [name]: value
@@ -211,6 +209,29 @@ function Form({ project, setProject, projects, setProjects }) {
 
 
             event.preventDefault()
+
+            if(!project.id){
+
+                api.post('/projetos', project)
+                    .then(res => {
+                        console.log(res.data)
+
+                        // setProject(res.da)
+
+                        setProjects([
+                            ...projects,
+                            project
+                        ])
+
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        alert('Erro ao cadastrar')
+                        location.reload()
+                    })
+
+                return
+            }
 
             api.put(`/projetos/${project.id}`, project)
                 .then(res => {
@@ -232,7 +253,6 @@ function Form({ project, setProject, projects, setProjects }) {
                     location.reload()
                 })
 
-            console.log(project)
 
         }}>
             <Input
@@ -325,7 +345,7 @@ function Form({ project, setProject, projects, setProjects }) {
             />
 
             <button type="submit" className="btn btn-primary">
-                {project.name ? 'Atualizar' : 'Cadastrar'}
+                {project.id ? 'Atualizar' : 'Cadastrar'}
             </button>
         </form>
     )
