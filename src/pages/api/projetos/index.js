@@ -23,6 +23,7 @@ export default async function projects(req, res) {
         }
     })
 
+
     res.json({
         projects,
         lastTagWeb: portal[0].name,

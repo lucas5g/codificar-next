@@ -2,16 +2,24 @@ import Head from 'next/head'
 import { Spinner } from '../../components/Spinner'
 import { TextCenter } from '../../components/TextCenter'
 import { useFetch } from "../../hooks/useFetch"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { api } from '../../services/api'
 
 export default function Project() {
 
     const [update, setUpdate] = useState(false)
     const [project, setProject] = useState({})
+    const [projects, setProjects] = useState([])
     const { data, error } = useFetch('/projetos')
 
 
+    useEffect(() => {
+        if (data) {
+
+            setProjects(data.projects)
+        }
+    }, [data])
 
 
     if (error) {
@@ -31,7 +39,8 @@ export default function Project() {
         )
 
     }
-    const { projects, lastTagReact, lastTagWeb } = data
+    const { lastTagReact, lastTagWeb } = data
+
 
 
     return (
@@ -167,7 +176,12 @@ export default function Project() {
                 </div>
                 {update &&
                     <div className="col-lg-6 mt-1">
-                        <Form project={project} setProject={setProject} />
+                        <Form
+                            project={project}
+                            setProject={setProject}
+                            projects={project}
+                            setProjects={setProjects}
+                        />
                     </div>
                 }
             </div>
@@ -176,12 +190,14 @@ export default function Project() {
 }
 
 
-function Form({ project, setProject }) {
+function Form({ project, setProject, projects, setProjects }) {
 
     // console.log(project)
 
     function handleChange(event) {
         const { name, value } = event.target
+
+        console.log({ name, value })
 
         setProject({
             ...project,
@@ -192,42 +208,113 @@ function Form({ project, setProject }) {
     return (
 
         <form onSubmit={event => {
+
+
             event.preventDefault()
+
+            api.put(`/projetos/${project.id}`, project)
+                .then(res => {
+                    console.log(res.data)
+
+
+                })
+                .catch(error => {
+                    console.log(error.response)
+                    alert('Erro ao atualizar')
+                    location.reload()
+                })
+
+            console.log(project)
+
         }}>
             <Input
                 label='Nome'
                 name='name'
                 value={project.name || ''}
                 handleChange={handleChange}
+                placeholder='Nome do Cliente'
 
             />
-            <Input
-                label='Portal'
-                name='portal'
-                value={project.portal || ''}
+            <div className="row">
+                <div className="col-lg-10">
+
+                    <Input
+                        label='Portal'
+                        name='portal'
+                        value={project.portal || ''}
+                        handleChange={handleChange}
+                        placeholder='URL do Portal'
+
+
+                    />
+                </div>
+                <div className="col-lg-2">
+
+                    <Input
+                        label='Portal Tag'
+                        name='versionWeb'
+                        value={project.versionWeb || ''}
+                        handleChange={handleChange}
+                        placeholder='versão'
+
+
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-lg-10">
+                    <Input
+                        label='Android'
+                        name='android'
+                        value={project.android || ''}
+                        handleChange={handleChange}
+                        placeholder='URL do Google Play'
+
+                    />
+                </div>
+                <div className="col-lg-2">
+                    <Input
+                        label='Android Tag'
+                        name='versionAndroid'
+                        value={project.versionAndroid || ''}
+                        handleChange={handleChange}
+                        placeholder='Versão'
+
+                    />
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-lg-10">
+
+                    <Input
+                        label='IOS'
+                        name='ios'
+                        value={project.ios || ''}
+                        handleChange={handleChange}
+                        placeholder='URL da Apple Store'
+
+                    />
+                </div>
+                <div className="col-lg-2">
+
+                    <Input
+                        label='IOS Tag'
+                        name='versionIos'
+                        value={project.versionIos || ''}
+                        handleChange={handleChange}
+                        placeholder='Versão'
+
+                    />
+                </div>
+            </div>
+            <Select
+                label="Status"
+                name="status"
                 handleChange={handleChange}
-
-
-            />
-            <Input
-                label='Android'
-                name='android'
-                value={project.android || ''}
-                handleChange={handleChange}
+                value={project.status || ''}
 
             />
-            <Input
-                label='IOS'
-                name='ios'
-                value={project.ios || ''}
-                handleChange={handleChange}
-
-            />
-            {/* <Input
-                label='Staus'
-                name='ios'
-            // value='qwe'
-            /> */}
 
             <button type="submit" className="btn btn-primary">
                 {project.name ? 'Atualizar' : 'Cadastrar'}
@@ -236,7 +323,7 @@ function Form({ project, setProject }) {
     )
 }
 
-function Input({ name, label, value, handleChange }) {
+function Input({ name, label, value, handleChange, placeholder }) {
     return (
         <div className="mb-3">
             <label htmlFor={name} className="form-label">{label}</label>
@@ -246,18 +333,31 @@ function Input({ name, label, value, handleChange }) {
                 id={name}
                 value={value}
                 onChange={handleChange}
+                placeholder={placeholder}
+                required
 
             />
         </div>
     )
 }
 
-function Select({ name, label, value }) {
+function Select({ name, label, value, handleChange }) {
     return (
         <div className="mb-3">
-            <select name={name} id={name}>
-                <option value={value}>{value}</option>
+            <label htmlFor={name} className="form-label">{label}</label>
+            <select
+                name={name}
+                id={name}
+                className="form-control"
+                onChange={handleChange}
+                value={value}
+            // required
+            >
+                {/* <option value="">Selecione</option> */}
+                <option value={true} >Ativado</option>
+                <option value="" >Desativado</option>
+
             </select>
-        </div>
+        </div >
     )
 }
