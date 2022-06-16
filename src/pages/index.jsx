@@ -1,6 +1,13 @@
+import {useFetch} from '../hooks/useFetch'
 import Head from 'next/head'
 
+
 export default function Home() {
+
+    useFetch('/issues')
+    useFetch('/projetos')
+
+
     return (
         <div className='container-fluid mt-5'>
             <Head>
