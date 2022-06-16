@@ -159,6 +159,8 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     const newListProjects = [...projects, data].sort((a, b) => a.name.localeCompare(b.name))
 
                     setProjects(newListProjects)
+                    setProject(data)
+                    // setProject({})
 
                   
                     setSendData(false)
