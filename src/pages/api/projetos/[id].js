@@ -12,14 +12,12 @@ export default async function projects(req, res) {
         return res.json(project)
     }
 
-    if(req.method === 'PUT'){
-        const {name, portal, ios, android, versionWeb, versionIos, versionAndroid, status} = req.body
-
-        console.log({status})
+    if (req.method === 'PUT') {
+        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status } = req.body
 
         const project = await prisma.project.update({
-            data:{
-                name, 
+            data: {
+                name,
                 portal,
                 ios,
                 android,
@@ -28,7 +26,7 @@ export default async function projects(req, res) {
                 versionAndroid,
                 status: status === 'true' ? true : false
             },
-            where:{
+            where: {
                 id: Number(req.query.id)
             }
         })

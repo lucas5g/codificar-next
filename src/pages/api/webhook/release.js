@@ -7,7 +7,7 @@ export default function release(req, res) {
 
     // console.log(req.body)
     if (event_name !== 'tag_push') {
-        console.log({ event_name })
+        // console.log({ event_name })
         return res.json({
             event_name
         })
