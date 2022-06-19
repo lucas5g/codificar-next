@@ -1,35 +1,8 @@
 import Head from 'next/head'
-import { Spinner } from '../../components/Spinner'
-import { TextCenter } from '../../components/TextCenter'
-import { useFetch } from "../../hooks/useFetch"
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { api } from '../../services/api'
 
-export default function Project() {
-
-    const { data, error } = useFetch('/projetos')
-
-    if (error) {
-        return (
-            <TextCenter text="Erro ao conectar com o servidor :(" height="80vh" />
-
-        )
-    }
-    if (!data) {
-        return (
-            <>
-                <Head>
-                    <title>Cods | Projetos</title>
-                </Head>
-                <Spinner />
-            </>
-        )
-
-    }
-    const { projects, lastTagReact, lastTagWeb } = data
-
-
+export default function Project({projects, lastTagReact, lastTagWeb}) {
 
     return (
         <div className="container-fluid mt-5 mb-3">
@@ -127,13 +100,12 @@ export async function getStaticProps(){
     const { data } = await api.get('/projetos')
     const { projects, lastTagReact, lastTagWeb } = data
 
-    console.log(data)
-    console.log({projects, lastTagReact, lastTagWeb})
+    // console.log(projects)
     return {
         props:{
-            // projects: projects || null,
-            // lastTagReact: lastTagReact || null,
-            // lastTagWeb: lastTagWeb || null        
+            projects,
+            lastTagReact,
+            lastTagWeb        
         },
         revalidate: 60 * 5
     }

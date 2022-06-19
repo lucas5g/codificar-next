@@ -10,7 +10,7 @@ const baseURL = () => {
 }
 
 export const api = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api`
+    baseURL: process.env.NEXT_PUBLIC_API_URL
 })
 
 export const apiRocket = axios.create({
