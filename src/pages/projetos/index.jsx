@@ -4,22 +4,11 @@ import { TextCenter } from '../../components/TextCenter'
 import { useFetch } from "../../hooks/useFetch"
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { api } from '../../services/api'
 
 export default function Project() {
 
-    const [update, setUpdate] = useState(false)
-    const [project, setProject] = useState({})
-    const [projects, setProjects] = useState([])
     const { data, error } = useFetch('/projetos')
-
-
-    useEffect(() => {
-        if (data) {
-
-            setProjects(data.projects)
-        }
-    }, [data])
-
 
     if (error) {
         return (
@@ -38,7 +27,7 @@ export default function Project() {
         )
 
     }
-    const { lastTagReact, lastTagWeb } = data
+    const { projects, lastTagReact, lastTagWeb } = data
 
 
 
@@ -133,3 +122,19 @@ export default function Project() {
 }
 
 
+export async function getStaticProps(){
+
+    const { data } = await api.get('/projetos')
+    const { projects, lastTagReact, lastTagWeb } = data
+
+    console.log(data)
+    console.log({projects, lastTagReact, lastTagWeb})
+    return {
+        props:{
+            // projects: projects || null,
+            // lastTagReact: lastTagReact || null,
+            // lastTagWeb: lastTagWeb || null        
+        },
+        revalidate: 60 * 5
+    }
+}
