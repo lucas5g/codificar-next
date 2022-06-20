@@ -1,8 +1,9 @@
 import Head from 'next/head'
+
 import Link from 'next/link'
 import { api } from '../../services/api'
 
-export default function Project({projects, lastTagReact, lastTagWeb}) {
+export default function Project({ projects, lastTagReact, lastTagWeb }) {
 
     return (
         <div className="container-fluid mt-5 mb-3">
@@ -28,7 +29,6 @@ export default function Project({projects, lastTagReact, lastTagWeb}) {
 
                     <table className="table">
                         <thead>
-                            {/* {!update && */}
                             <tr>
                                 <th scope="col">N°</th>
                                 <th scope="col">Nome</th>
@@ -88,25 +88,26 @@ export default function Project({projects, lastTagReact, lastTagWeb}) {
                         </tbody>
                     </table>
                 </div>
-                    
+
             </div>
         </div>
     )
 }
 
 
-export async function getStaticProps(){
+export async function getStaticProps() {
 
     const { data } = await api.get('/projetos')
     const { projects, lastTagReact, lastTagWeb } = data
 
-    // console.log(projects)
+    console.log('revalidate projetos')
     return {
-        props:{
+        props: {
             projects,
             lastTagReact,
-            lastTagWeb        
+            lastTagWeb
         },
-        revalidate: 60 * 5
+        // revalidate: 60 * 5
+        revalidate: 5
     }
 }

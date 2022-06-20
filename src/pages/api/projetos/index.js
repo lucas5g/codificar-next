@@ -1,15 +1,14 @@
 import axios from 'axios'
 import { prisma } from '../../../../prisma/index.mjs'
+import { getProjects } from '../../../utils/fetch.js'
 
 export default async function projects(req, res) {
 
 
     if (req.method === 'GET') {
 
-        const projects = await prisma.project.findMany({
-            orderBy: { name: 'asc' },
+        const projects = await getProjects()
 
-        })
         const { data: portal } = await axios.get(process.env.GITLAB_URL_TAG, {
             headers: {
                 Authorization: `Bearer ${process.env.GITLAB_KEY}`
