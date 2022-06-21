@@ -2,6 +2,7 @@ import Head from 'next/head'
 
 import Link from 'next/link'
 import { api } from '../../services/api'
+import { getLastTagReact, getLastTagWeb, getProjects } from '../../utils/fetch'
 
 export default function Project({ projects, lastTagReact, lastTagWeb }) {
 
@@ -97,17 +98,22 @@ export default function Project({ projects, lastTagReact, lastTagWeb }) {
 
 export async function getStaticProps() {
 
-    const { data } = await api.get('/projetos')
-    const { projects, lastTagReact, lastTagWeb } = data
+    const lastTagWeb = await getLastTagWeb()
+    const lastTagReact = await getLastTagReact()
+    const projects = await getProjects()
+    // console.log({lastTagWeb, lastTagReact})
 
-    console.log('revalidate projetos')
+    // console.log('env ' + process.env.GITLAB_KEY)
+    // console.log('env url ' + process.env.GITLAB_URL_TAG)
+
+    // console.log('revalidate projetos')
     return {
         props: {
             projects,
             lastTagReact,
             lastTagWeb
         },
-        // revalidate: 60 * 5
-        revalidate: 5
+        revalidate: 60 * 2
+        // revalidate: 5
     }
 }

@@ -3,22 +3,37 @@ import { prisma } from "../../prisma/index.mjs"
 
 export const getProjects = async() => {
     return await prisma.project.findMany({
-        orderBy: { name: 'asc' }
+        orderBy: { name: 'asc' },
+        select: {
+            id: true,
+            name: true,
+            portal: true,
+            ios: true,
+            android: true,
+            versionWeb: true,
+            versionIos: true,
+            versionAndroid: true,
+            status: true
+        }
     })
 }
 
 export const getLastTagWeb = async() => {
-    return await axios.get(process.env.NEXT_PUBLI_GITLAB_URL_TAG, {
-        headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLI_GITLAB_KEY}`
-        }
-    })
-}
-
-export const getLastTagReact = async() => {
-    return await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
+    const { data } = await axios.get(process.env.GITLAB_URL_TAG, {
         headers: {
             Authorization: `Bearer ${process.env.GITLAB_KEY}`
         }
     })
+    return data[0].name
+
+}
+
+export const getLastTagReact = async() => {
+    const { data } = await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
+        headers: {
+            Authorization: `Bearer ${process.env.GITLAB_KEY}`
+        }
+    })
+
+    return data[0].name
 }
