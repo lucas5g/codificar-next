@@ -113,7 +113,7 @@ export async function getStaticProps() {
             lastTagReact,
             lastTagWeb
         },
-        revalidate: 60 * 2
+        revalidate: 60 
         // revalidate: 5
     }
 }
