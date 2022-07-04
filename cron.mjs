@@ -7,7 +7,7 @@ import axios from 'axios';
 //         // projectsVersion()
 // });
 
-const minute = 5
+const minute = 30
 const time = minute => `*/${minute} 8-23 * * 1-5`
 
 cron.schedule(time(minute), () => {
@@ -33,6 +33,10 @@ cron.schedule('22 1,4 * * *', () => {
     console.log("Cron log test")
 });
 
+cron.schedule('23 58 * * 1-5', () => {
+    console.log('cron report daily')
+    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/issues/report')
+})
 
 
 // import { pointRecord } from '../bot/point-record.js'
