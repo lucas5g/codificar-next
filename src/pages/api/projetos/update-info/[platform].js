@@ -58,7 +58,7 @@ export default async function handler(req, res) {
                     }
 
                 })
-            }, index * 1000)
+            }, index * 1500)
         })
 
     }
