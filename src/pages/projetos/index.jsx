@@ -1,10 +1,33 @@
 import Head from 'next/head'
 
 import Link from 'next/link'
-import { api } from '../../services/api'
-import { getLastTagReact, getLastTagWeb, getProjects } from '../../utils/fetch'
+import { Spinner } from '../../components/Spinner'
+import { TextCenter } from '../../components/TextCenter'
+import { useFetch } from '../../hooks/useFetch'
 
-export default function Project({ projects, lastTagReact, lastTagWeb }) {
+export default function Project() {
+
+    const { data, error } = useFetch('/projetos')
+
+    if (error) {
+        return (
+            <TextCenter text="Erro ao conectar com o servidor :(" height="80vh" />
+
+        )
+    }
+
+    if (!data) {
+        return (
+            <>
+                <Head>
+                    <title>Cods | Projetos</title>
+                </Head>
+                <Spinner />
+            </>
+        )
+    }
+
+    const {projects, lastTagReact, lastTagWeb} = data
 
     return (
         <div className="container-fluid mt-5 mb-3">
@@ -96,24 +119,24 @@ export default function Project({ projects, lastTagReact, lastTagWeb }) {
 }
 
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
 
-    const lastTagWeb = await getLastTagWeb()
-    const lastTagReact = await getLastTagReact()
-    const projects = await getProjects()
-    // console.log({lastTagWeb, lastTagReact})
+//     const lastTagWeb = await getLastTagWeb()
+//     const lastTagReact = await getLastTagReact()
+//     const projects = await getProjects()
+//     // console.log({lastTagWeb, lastTagReact})
 
-    // console.log('env ' + process.env.GITLAB_KEY)
-    // console.log('env url ' + process.env.GITLAB_URL_TAG)
+//     // console.log('env ' + process.env.GITLAB_KEY)
+//     // console.log('env url ' + process.env.GITLAB_URL_TAG)
 
-    // console.log('revalidate projetos')
-    return {
-        props: {
-            projects,
-            lastTagReact,
-            lastTagWeb
-        },
-        revalidate: 60 
-        // revalidate: 5
-    }
-}
+//     // console.log('revalidate projetos')
+//     return {
+//         props: {
+//             projects,
+//             lastTagReact,
+//             lastTagWeb
+//         },
+//         revalidate: 60 
+//         // revalidate: 5
+//     }
+// }
