@@ -7,7 +7,7 @@ import axios from 'axios';
 //         // projectsVersion()
 // });
 
-const minute = 30
+const minute = 10
 const time = minute => `*/${minute} 8-23 * * 1-5`
 
 cron.schedule(time(minute), () => {
