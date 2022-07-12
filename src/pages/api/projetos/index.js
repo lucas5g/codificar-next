@@ -30,9 +30,9 @@ export default async function projects(req, res) {
 
     if (req.method === 'POST') {
 
-        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status } = req.body
+        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status, extensionAndroid, urlUploadAndroid } = req.body
 
-        if (!name || !ios || !android) {
+        if (!name || !ios || !android || !extensionAndroid || !urlUploadAndroid) {
             return res.status(401).json({
                 msg: 'Todos os campos são obrigatórios'
             })
@@ -54,6 +54,8 @@ export default async function projects(req, res) {
                 versionWeb,
                 versionIos,
                 versionAndroid,
+                extensionAndroid,
+                urlUploadAndroid,
                 status: status === 'true' ? true : false
             },
         })

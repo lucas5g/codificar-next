@@ -4,17 +4,6 @@ import { prisma } from "../../prisma/index.mjs"
 export const getProjects = async() => {
     return await prisma.project.findMany({
         orderBy: { name: 'asc' },
-        select: {
-            id: true,
-            name: true,
-            portal: true,
-            ios: true,
-            android: true,
-            versionWeb: true,
-            versionIos: true,
-            versionAndroid: true,
-            status: true
-        }
     })
 }
 

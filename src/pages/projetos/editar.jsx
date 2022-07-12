@@ -15,14 +15,14 @@ export default function ProjectEdit() {
 
     const [sendData, setSendData] = useState(false)
 
-    const {data, error} = useFetch('/projetos')
+    const { data, error } = useFetch('/projetos')
 
     useEffect(() => {
-        if(data){
-            console.log( 'fetch')
+        if (data) {
+            console.log('fetch')
             setProjects(data.projects)
         }
-            
+
     }, [data])
 
 
@@ -32,7 +32,7 @@ export default function ProjectEdit() {
 
         )
     }
-    if (projects.length === 0) {
+    if (!data) {
         return (
             <>
                 <Head>
@@ -162,7 +162,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     setProject(data)
                     // setProject({})
 
-                  
+
                     setSendData(false)
                 } catch (error) {
                     setSendData(false)
@@ -252,6 +252,30 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                         value={project.versionAndroid || ''}
                         handleChange={handleChange}
                         placeholder='Versão'
+
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-lg-10">
+                    <Input
+                        label='Android Url Upload'
+                        name='urlUploadAndroid'
+                        value={project.urlUploadAndroid || ''}
+                        placeholder='Url para upload do android'
+                        handleChange={handleChange}
+
+
+                    />
+                </div>
+                <div className="col-lg-2">
+
+                    <Input
+                        label='Android .ext'
+                        name='extensionAndroid'
+                        value={project.extensionAndroid || ''}
+                        placeholder='Extensão'
+                        handleChange={handleChange}
 
                     />
                 </div>

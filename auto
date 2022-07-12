@@ -17,7 +17,7 @@ push(){
             && npm install \
             && npm run build  \
             && pm2 restart cods-next --update-env  \
-            && pm2 restart node-cron --update-env
+            && pm2 restart cron --update-env
         "
         
         echo "\n\nhttp://version.aplicativoderestaurante.com.br:3000\n\n"

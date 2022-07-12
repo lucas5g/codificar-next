@@ -13,7 +13,7 @@ export default async function projects(req, res) {
     }
 
     if (req.method === 'PUT') {
-        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status } = req.body
+        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status, extensionAndroid, urlUploadAndroid } = req.body
 
         const project = await prisma.project.update({
             data: {
@@ -24,6 +24,8 @@ export default async function projects(req, res) {
                 versionWeb,
                 versionIos,
                 versionAndroid,
+                extensionAndroid,
+                urlUploadAndroid,
                 status: status === 'true' ? true : false
             },
             where: {
