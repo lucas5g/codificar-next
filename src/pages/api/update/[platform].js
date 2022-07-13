@@ -46,6 +46,7 @@ export default async function handler(req, res) {
 
         projects.map(project => project.name = project.name
             .replace('molde restaurante', 'molde_restaurante')
+            .replace('medicol', 'medicolappmarketplace')
             .replace(' ', '')
             .replace('á', 'a')
             .replace('ã', 'a')
