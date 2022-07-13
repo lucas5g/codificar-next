@@ -21,6 +21,7 @@ export default async function handler(req, res) {
 
     const web = {
         lastTag: lastTagWeb,
+        total: projectsWeb.length,
         projects: projectsWeb
     }
 
@@ -51,6 +52,7 @@ export default async function handler(req, res) {
 
     const android = {
         lastTag: lastTagReact,
+        total: projectsAndroid.length,
         projects: projectsAndroid
     }
 
