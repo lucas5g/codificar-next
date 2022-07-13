@@ -52,10 +52,15 @@ export default async function handler(req, res) {
             .replace('ã', 'a')
             .replace('ç', 'c')
         )
+
+        const projectsName = projects.map(projects => projects.name)
+
+        // console.log({ projectsName })
         res.json({
             lastTagReact,
             totalProjects: projects.length,
-            projects
+            projects,
+            projectsName
         })
         return
     }
