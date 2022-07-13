@@ -1,34 +1,27 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["referentialIntegrity"]
-
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
-
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model Project {
-    id               Int      @id @default(autoincrement())
-    name             String   @unique
-    portal           String
-    ios              String
-    android          String
-    versionWeb       String?
-    versionIos       String?
-    versionAndroid   String?
-    status           Boolean  @default(true)
-    urlUploadAndroid String
-    extensionAndroid String
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @default(now()) @updatedAt
+  id               Int      @id @default(autoincrement())
+  name             String   @unique
+  portal           String
+  ios              String
+  android          String
+  versionWeb       String?
+  versionIos       String?
+  versionAndroid   String?
+  extensionAndroid String   @db.VarChar(5)
+  urlUploadAndroid String   @db.VarChar(200)
+  status           Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now()) @updatedAt
 
-
-
-    @@map("projects")
+  @@map("projects")
 }

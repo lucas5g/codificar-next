@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { prisma } from '../../../../prisma/index.mjs'
+import { prisma } from '../../../../prisma/index.js'
 import { getProjects } from '../../../utils/fetch.js'
 
 export default async function projects(req, res) {

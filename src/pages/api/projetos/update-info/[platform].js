@@ -1,7 +1,7 @@
 import axios from 'axios';
 import puppeteer from 'puppeteer';
 
-import { prisma } from "../../../../../prisma/index.mjs"
+import { prisma } from "../../../../../prisma/index.js"
 
 export default async function handler(req, res) {
 

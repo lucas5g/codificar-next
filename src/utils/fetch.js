@@ -1,5 +1,5 @@
 import axios from "axios"
-import { prisma } from "../../prisma/index.mjs"
+import { prisma } from "../../prisma/index.js"
 
 export const getProjects = async() => {
     return await prisma.project.findMany({

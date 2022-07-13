@@ -1,4 +1,4 @@
-import { prisma } from "../../../../prisma/index.mjs";
+import { prisma } from "../../../../prisma/index.js";
 
 export default async function projects(req, res) {
 
@@ -15,7 +15,7 @@ export default async function projects(req, res) {
     if (req.method === 'PUT') {
         const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status, extensionAndroid, urlUploadAndroid } = req.body
 
-        console.log({status})
+        console.log({ status })
         const project = await prisma.project.update({
             data: {
                 name,
@@ -27,7 +27,7 @@ export default async function projects(req, res) {
                 versionAndroid,
                 extensionAndroid,
                 urlUploadAndroid,
-                status: (status === 'true' || status === true)  ? true : false
+                status: (status === 'true' || status === true) ? true : false
             },
             where: {
                 id: Number(req.query.id)
