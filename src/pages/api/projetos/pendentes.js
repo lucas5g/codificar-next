@@ -44,6 +44,7 @@ export default async function handler(req, res) {
     projectsAndroid.map(project => project.name = project.name
         .replace('molde restaurante', 'molde_restaurante')
         .replace('medicol', 'medicolappmarketplace')
+        .replace('demo', 'demoappmarkeptlace')
         .replace(' ', '')
         .replace('á', 'a')
         .replace('ã', 'a')
@@ -57,8 +58,6 @@ export default async function handler(req, res) {
     }
 
     // console.log({ projectsName })
-    res.json({web, android})
+    res.json({ web, android })
     return
 }
-
-
