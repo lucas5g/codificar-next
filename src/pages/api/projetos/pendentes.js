@@ -41,15 +41,20 @@ export default async function handler(req, res) {
         }
     })
 
-    projectsAndroid.map(project => project.name = project.name
-        .replace('molde restaurante', 'molde_restaurante')
-        .replace('medicol', 'medicolappmarketplace')
-        .replace('demo', 'demomarketplace')
-        .replace(' ', '')
-        .replace('á', 'a')
-        .replace('ã', 'a')
-        .replace('ç', 'c')
-    )
+    projectsAndroid.map(project => {
+        project.name = project.name
+            .replace('molde restaurante', 'molde_restaurante')
+            .replace('medicol', 'medicolappmarketplace')
+            .replace('demo', 'demomarketplace')
+            .replace(' ', '')
+            .replace('á', 'a')
+            .replace('ã', 'a')
+            .replace('ç', 'c')
+
+
+        project.auto = `./auto -v ${lastTagReact} -p ${project.name} -a ${project.extensionAndroid}`
+        project.extensionAndroid = undefined
+    })
 
     const android = {
         lastTag: lastTagReact,
@@ -59,5 +64,4 @@ export default async function handler(req, res) {
 
     // console.log({ projectsName })
     res.json({ web, android })
-    return
 }
