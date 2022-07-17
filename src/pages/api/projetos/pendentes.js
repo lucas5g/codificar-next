@@ -53,7 +53,9 @@ export default async function handler(req, res) {
 
 
         project.auto = `./auto -v ${lastTagReact} -p ${project.name} -a ${project.extensionAndroid}`
-        project.extensionAndroid = undefined
+        project.pathApp = `releases/${lastTagReact}/${project.name}/${project.name}-user-${lastTagReact}.${project.extensionAndroid}`
+            // project.extensionAndroid = undefined
+
     })
 
     const android = {
