@@ -22,10 +22,10 @@ export function IssuesColumn({ issues }) {
                         rel="noreferrer"
                         className={
                             `list-group-item list-group-item-action
-                            ${issue.priority === 'Alta'  && `bg-danger`}
+                            ${issue.priority === 'Alta' && `bg-danger`}
                             ${issue.priority === 'Urgente' && `bg-info`}
                             ${!issue.assigned_to && `bg-warning`}
-                            `                           
+                            `
                         }
                         key={issue.id} >
                         <div className="d-flex w-100 justify-content-between ">
@@ -34,11 +34,19 @@ export function IssuesColumn({ issues }) {
                         </div>
                         {/* <hr /> */}
                         {/* <p class="mb-1">Some placeholder content in a paragraph.</p> */}
-                        <small style={{ fontSize: 14 }}>{issue.subject}</small>
+                        <small style={{ fontSize: 14 }}>
+                            {issue.subject}
+                        </small>
                         <br />
                         {!issue.assigned_to &&
                             <small style={{ fontSize: 14 }} className="fw-bold">Quem pode pegar ?</small>
                         }
+                        {issue.creationDays > 7 &&
+                            <small style={{ fontSize: 10, float: 'right' }}>
+                                {issue.creationDays} dias
+                            </small>
+                        }
+
                     </a>
 
                 ))}
