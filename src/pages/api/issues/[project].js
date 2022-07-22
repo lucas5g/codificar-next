@@ -37,14 +37,14 @@ export default async function issues(req, res) {
 
     const trackers = distinctArrayObj({ arrayObj: issues, filter: 'tracker' })
     const assigneds = distinctArrayObj({ arrayObj: issues, filter: 'assigned_to' })
-    const clients = distinctArrayObj({ arrayObj: issues, filter: 'project' })
+    const projects = distinctArrayObj({ arrayObj: issues, filter: 'project' })
 
     res.json({
         issuesQuantity: issues.length,
         issues,
         trackers,
         assigneds,
-        clients,
+        projects,
 
     })
 

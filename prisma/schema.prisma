@@ -8,6 +8,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Setting {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  projectId String @unique
+  qa        String @unique
+}
+
 model Project {
   id               Int      @id @default(autoincrement())
   name             String   @unique

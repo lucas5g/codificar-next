@@ -20,11 +20,11 @@ export default function Issues() {
     const [issuesHomologation, setIssuesHomologation] = useState([])
     const [noResult, setNoResult] = useState(false)
 
-    const [clients, setClients] = useState([])
+    const [projects, setProjects] = useState([])
     const [trackers, setTrackers] = useState([])
     const [assigneds, setAssigneds] = useState([])
 
-    const [clientSelected, setClientSelected] = useState('')
+    const [projectSelected, setProjectSelected] = useState('')
     const [trackersSelected, setTrackersSelected] = useState('')
     const [assignedSelected, setAssignedSelected] = useState('')
 
@@ -36,7 +36,7 @@ export default function Issues() {
     useEffect(() => {
     
         // setAssignedSelected('')
-        setClientSelected('')
+        setProjectSelected('')
 
     }, [project])
 
@@ -45,14 +45,14 @@ export default function Issues() {
             return
         }
 
-        const { issues, clients, trackers, assigneds } = data
+        const { issues, projects, trackers, assigneds } = data
 
         console.log({issues})
         let issuesFilter = issues
 
-        issuesFilter = clientSelected === ''
+        issuesFilter = projectSelected === ''
             ? issuesFilter
-            : issuesFilter.filter(issue => issue.project.name === clientSelected)
+            : issuesFilter.filter(issue => issue.project.name === projectSelected)
 
 
         issuesFilter = assignedSelected === ''
@@ -77,10 +77,10 @@ export default function Issues() {
         setIssuesHomologation(issuesFilter.filter(issue => issue.status === "Homologação"
         ))
 
-        setClients(clients)
+        setProjects(projects)
         setTrackers(trackers)
         setAssigneds(assigneds)
-    }, [clientSelected, trackersSelected, assignedSelected, data, project])
+    }, [projectSelected, trackersSelected, assignedSelected, data, project])
 
     if (error) {
         return (
@@ -114,9 +114,9 @@ export default function Issues() {
 
             <div className="row mb-4">
                 <SelectFilter
-                    options={clients}
+                    options={projects}
                     name="Clientes"
-                    changeSelected={setClientSelected}
+                    changeSelected={setProjectSelected}
                     issues={issues}
                     type="project"
                 />

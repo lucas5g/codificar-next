@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { mutate } from "swr";
+import { Input } from "../../components/Input";
 import { Spinner } from "../../components/Spinner";
 import { TextCenter } from "../../components/TextCenter";
 import { useFetch } from "../../hooks/useFetch";
@@ -144,11 +145,9 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
 
     return (
 
-        <form onSubmit={async (event) => {
-
-
+        <form 
+            onSubmit={async (event) => {
             event.preventDefault()
-
             if (!project.id) {
 
                 try {
@@ -327,23 +326,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
     )
 }
 
-function Input({ name, label, value, handleChange, placeholder }) {
-    return (
-        <div className="mb-3">
-            <label htmlFor={name} className="form-label">{label}</label>
-            <input type="name"
-                className="form-control"
-                name={name}
-                id={name}
-                value={value}
-                onChange={handleChange}
-                placeholder={placeholder}
-                required
 
-            />
-        </div>
-    )
-}
 
 function Select({ name, label, value, handleChange }) {
     return (
