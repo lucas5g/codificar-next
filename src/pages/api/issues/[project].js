@@ -4,9 +4,20 @@ import { apiRedmine } from "../../../services/api"
 
 export default async function issues(req, res) {
 
-    const { data } = await apiRedmine.get('/issues.json?sort=status&limit=50')
+    const { project } = req.query
 
-    // console.log(data.issues)
+    let project_id
+
+    project === 'marketplace' && (project_id = 'ifood-clone')
+    project === 'servicos' && (project_id = 'uber-servicos')
+
+    if (project_id === undefined) {
+        res.status(404).json({
+            msg: 'Project id não encontrado.'
+        })
+        return
+    }
+    const { data } = await apiRedmine.get(`/issues.json?sort=status&limit=100&project_id=${project_id}`)
 
     const issues = data.issues.map(issue => {
 
@@ -26,15 +37,15 @@ export default async function issues(req, res) {
 
     const trackers = distinctArrayObj({ arrayObj: issues, filter: 'tracker' })
     const assigneds = distinctArrayObj({ arrayObj: issues, filter: 'assigned_to' })
-    const projects = distinctArrayObj({ arrayObj: issues, filter: 'project' })
+    const clients = distinctArrayObj({ arrayObj: issues, filter: 'project' })
 
-    res
-        .json({
-            issues,
-            trackers,
-            assigneds,
-            projects
+    res.json({
+        issuesQuantity: issues.length,
+        issues,
+        trackers,
+        assigneds,
+        clients,
 
-        })
+    })
 
 }

@@ -4,8 +4,10 @@ import Head from 'next/head'
 
 export default function Home() {
 
-    useFetch('/issues')
-    useFetch('/projetos')
+    useFetch('/issues/marketplace')
+    useFetch('/issues/servicos')
+    
+    // useFetch('/projetos')
 
 
     return (

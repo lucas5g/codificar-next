@@ -1,12 +1,12 @@
 import Head from "next/head"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { IssuesColumn } from "../components/IssuesColumn"
-import { SelectFilter } from "../components/SelectFilter"
-import { Spinner } from "../components/Spinner"
-import { TextCenter } from "../components/TextCenter"
+import { IssuesColumn } from "../../components/IssuesColumn"
+import { SelectFilter } from "../../components/SelectFilter"
+import { Spinner } from "../../components/Spinner"
+import { TextCenter } from "../../components/TextCenter"
 // import { delay } from "../helpers"
-import { useFetch } from "../hooks/useFetch"
-import { api } from "../services/api"
+import { useFetch } from "../../hooks/useFetch"
 
 export default function Issues() {
 
@@ -20,27 +20,39 @@ export default function Issues() {
     const [issuesHomologation, setIssuesHomologation] = useState([])
     const [noResult, setNoResult] = useState(false)
 
-    const [projects, setProjects] = useState([])
+    const [clients, setClients] = useState([])
     const [trackers, setTrackers] = useState([])
     const [assigneds, setAssigneds] = useState([])
 
-    const [projectSelected, setProjectSelected] = useState('')
+    const [clientSelected, setClientSelected] = useState('')
     const [trackersSelected, setTrackersSelected] = useState('')
     const [assignedSelected, setAssignedSelected] = useState('')
 
-    const { data, error } = useFetch('/issues')
+    // console.log('test', useRouter().query.project)
+    const { project } = useRouter().query
 
+    const { data, error } = useFetch(`/issues/${project}`)
+
+    useEffect(() => {
+    
+        // setAssignedSelected('')
+        setClientSelected('')
+
+    }, [project])
 
     useEffect(() => {
         if (!data) {
             return
         }
-        const { issues, projects, trackers, assigneds } = data
+
+        const { issues, clients, trackers, assigneds } = data
+
+        console.log({issues})
         let issuesFilter = issues
 
-        issuesFilter = projectSelected === ''
+        issuesFilter = clientSelected === ''
             ? issuesFilter
-            : issuesFilter.filter(issue => issue.project.name === projectSelected)
+            : issuesFilter.filter(issue => issue.project.name === clientSelected)
 
 
         issuesFilter = assignedSelected === ''
@@ -65,10 +77,10 @@ export default function Issues() {
         setIssuesHomologation(issuesFilter.filter(issue => issue.status === "Homologação"
         ))
 
-        setProjects(projects)
+        setClients(clients)
         setTrackers(trackers)
         setAssigneds(assigneds)
-    }, [projectSelected, trackersSelected, assignedSelected, data])
+    }, [clientSelected, trackersSelected, assignedSelected, data, project])
 
     if (error) {
         return (
@@ -102,9 +114,9 @@ export default function Issues() {
 
             <div className="row mb-4">
                 <SelectFilter
-                    options={projects}
-                    name="Projetos"
-                    changeSelected={setProjectSelected}
+                    options={clients}
+                    name="Clientes"
+                    changeSelected={setClientSelected}
                     issues={issues}
                     type="project"
                 />
