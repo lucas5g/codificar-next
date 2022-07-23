@@ -42,7 +42,9 @@ function Form() {
     return (
         <form>
             <Input
-
+                label="Nome"
+                name="name"
+                placeholder="Nome do grupo do projeto"
 
             />
         </form>
