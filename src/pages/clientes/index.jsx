@@ -1,13 +1,15 @@
 import Head from 'next/head'
 
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Spinner } from '../../components/Spinner'
 import { TextCenter } from '../../components/TextCenter'
 import { useFetch } from '../../hooks/useFetch'
 
 export default function Project() {
 
-    const { data, error } = useFetch('/projetos')
+    const {project} = useRouter().query
+    const { data, error } = useFetch(`/clientes?project=${project}`)
 
     if (error) {
         return (
@@ -38,7 +40,7 @@ export default function Project() {
 
                 <h1>Projetos</h1>
                 <div>
-                    <Link href='/projetos/editar'>
+                    <Link href='/clientes/editar'>
                         <a className='btn btn-outline-success'>
                             Editar
                         </a>
@@ -63,7 +65,7 @@ export default function Project() {
                         </thead>
                         <tbody>
 
-                            {projects.filter(project => project.status).map((project, index) => (
+                            {projects?.filter(project => project.status).map((project, index) => (
 
                                 <tr key={project.name}>
 

@@ -1,34 +1,40 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+    provider        = "prisma-client-js"
+    previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
-model Setting {
-  id        Int    @id @default(autoincrement())
-  name      String @unique
-  projectId String @unique
-  qa        String @unique
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model Project {
-  id               Int      @id @default(autoincrement())
-  name             String   @unique
-  portal           String
-  ios              String
-  android          String
-  versionWeb       String?
-  versionIos       String?
-  versionAndroid   String?
-  extensionAndroid String   @db.VarChar(5)
-  urlUploadAndroid String   @db.VarChar(200)
-  status           Boolean  @default(true)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @default(now()) @updatedAt
+    id               Int      @id @default(autoincrement())
+    projectIdRedmine String   @unique
+    name             String   @unique
+    slug             String?   @unique 
+    channelRocket    String
+    qa               String
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @default(now()) @updatedAt
 
-  @@map("projects")
+    @@map("projects")
+}
+
+model Client {
+    id               Int      @id @default(autoincrement())
+    name             String   @unique
+    portal           String
+    ios              String
+    android          String
+    versionWeb       String?
+    versionIos       String?
+    versionAndroid   String?
+    extensionAndroid String   @db.VarChar(5)
+    urlUploadAndroid String   @db.VarChar(200)
+    status           Boolean  @default(true)
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @default(now()) @updatedAt
+
+    @@map("clients")
 }

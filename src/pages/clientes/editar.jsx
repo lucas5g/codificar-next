@@ -91,7 +91,7 @@ export default function ProjectEdit() {
                         </thead>
                         <tbody>
 
-                            {projects.map((project, index) => (
+                            {projects?.map((project, index) => (
                                 <tr
                                     className={project.status ? 'bg-success' : 'bg-danger'}
                                     style={{

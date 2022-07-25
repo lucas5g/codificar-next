@@ -1,23 +1,25 @@
 import moment from "moment"
 import { distinctArrayObj } from "../../../helpers"
 import { apiRedmine } from "../../../services/api"
+import { prisma } from '../../../../prisma'
 
 export default async function issues(req, res) {
 
-    const { project } = req.query
+    const { slugProject } = req.query
 
-    let project_id
+    const project = await prisma.project.findFirst({
+        where: {
+            slug: slugProject
+        }
+    })
 
-    project === 'marketplace' && (project_id = 'ifood-clone')
-    project === 'servicos' && (project_id = 'uber-servicos')
-
-    if (project_id === undefined) {
-        res.status(404).json({
-            msg: 'Project id não encontrado.'
-        })
-        return
+    if (!project) {
+        return res
+            .status(404)
+            .json({ msg: `O ${slugProject} não foi cadastrado.` })
     }
-    const { data } = await apiRedmine.get(`/issues.json?sort=status&limit=100&project_id=${project_id}`)
+
+    const { data } = await apiRedmine.get(`/issues.json?sort=status&limit=100&project_id=${project.projectIdRedmine}`)
 
     const issues = data.issues.map(issue => {
 
@@ -29,7 +31,7 @@ export default async function issues(req, res) {
             assigned_to: issue.assigned_to && issue.assigned_to,
             tracker: issue.tracker,
             priority: issue.priority.name,
-            project: issue.project,
+            client: issue.project,
             creationDays: moment().diff(issue.created_on, 'days')
         }
     })
@@ -37,14 +39,14 @@ export default async function issues(req, res) {
 
     const trackers = distinctArrayObj({ arrayObj: issues, filter: 'tracker' })
     const assigneds = distinctArrayObj({ arrayObj: issues, filter: 'assigned_to' })
-    const projects = distinctArrayObj({ arrayObj: issues, filter: 'project' })
+    const clients = distinctArrayObj({ arrayObj: issues, filter: 'client' })
 
     res.json({
         issuesQuantity: issues.length,
         issues,
         trackers,
         assigneds,
-        projects,
+        clients,
 
     })
 

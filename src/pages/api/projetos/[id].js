@@ -1,41 +1,50 @@
-import { prisma } from "../../../../prisma/index.js";
+import { prisma } from "../../../../prisma";
+import { convertSlug } from "../../../helpers";
 
-export default async function projects(req, res) {
+export default async function handler(req, res) {
+
+    const project = await prisma.project.findFirst({
+        where: {
+            id: Number(req.query.id)
+        }
+    })
+
+    if (!project) {
+        return res
+            .status(401)
+            .json({ msg: 'Projeto não existe' })
+    }
 
     if (req.method === 'GET') {
-
-        const project = await prisma.project.findUnique({
-            where: {
-                id: Number(req.query.id)
-            }
-        })
         return res.json(project)
     }
 
     if (req.method === 'PUT') {
-        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status, extensionAndroid, urlUploadAndroid } = req.body
+        const { projectIdRedmine, name, channelRocket, qa } = req.body
 
-        console.log({ status })
-        const project = await prisma.project.update({
-            data: {
-                name,
-                portal,
-                ios,
-                android,
-                versionWeb,
-                versionIos,
-                versionAndroid,
-                extensionAndroid,
-                urlUploadAndroid,
-                status: (status === 'true' || status === true) ? true : false
-            },
+        if (!projectIdRedmine || !name || !channelRocket || !qa) {
+            return res
+                .status(401)
+                .json({ msg: 'Todos os campos são obrigatórios.' })
+
+        }
+
+        const projectUpdate = await prisma.project.update({
             where: {
                 id: Number(req.query.id)
+            },
+            data: {
+                projectIdRedmine,
+                name,
+                channelRocket,
+                qa,
+                slug: convertSlug(name)
             }
         })
 
-
-        res.json(project)
-
+        return res.json(projectUpdate)
     }
+
+
+    res.status(404).json({ msg: 'Method not found' })
 }

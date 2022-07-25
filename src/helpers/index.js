@@ -83,3 +83,12 @@ export const devUserRocket = (user) => {
 
     return userRocket
 }
+
+export const convertSlug = name => {
+
+    return name
+        .replace('ç', 'c')
+        .replace(/[ã, á]/g, 'a')
+        .replace(' ', '-')
+        .toLowerCase()
+}

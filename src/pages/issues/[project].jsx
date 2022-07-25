@@ -20,11 +20,11 @@ export default function Issues() {
     const [issuesHomologation, setIssuesHomologation] = useState([])
     const [noResult, setNoResult] = useState(false)
 
-    const [projects, setProjects] = useState([])
+    const [clients, setClients] = useState([])
     const [trackers, setTrackers] = useState([])
     const [assigneds, setAssigneds] = useState([])
 
-    const [projectSelected, setProjectSelected] = useState('')
+    const [clientSelected, setClientSelected] = useState('')
     const [trackersSelected, setTrackersSelected] = useState('')
     const [assignedSelected, setAssignedSelected] = useState('')
 
@@ -34,9 +34,9 @@ export default function Issues() {
     const { data, error } = useFetch(`/issues/${project}`)
 
     useEffect(() => {
-    
+
         // setAssignedSelected('')
-        setProjectSelected('')
+        setClientSelected('')
 
     }, [project])
 
@@ -45,14 +45,14 @@ export default function Issues() {
             return
         }
 
-        const { issues, projects, trackers, assigneds } = data
+        const { issues, clients, trackers, assigneds } = data
 
-        console.log({issues})
+        console.log({ issues })
         let issuesFilter = issues
 
-        issuesFilter = projectSelected === ''
+        issuesFilter = clientSelected === ''
             ? issuesFilter
-            : issuesFilter.filter(issue => issue.project.name === projectSelected)
+            : issuesFilter.filter(issue => issue.client.name === clientSelected)
 
 
         issuesFilter = assignedSelected === ''
@@ -77,10 +77,10 @@ export default function Issues() {
         setIssuesHomologation(issuesFilter.filter(issue => issue.status === "Homologação"
         ))
 
-        setProjects(projects)
+        setClients(clients)
         setTrackers(trackers)
         setAssigneds(assigneds)
-    }, [projectSelected, trackersSelected, assignedSelected, data, project])
+    }, [clientSelected, trackersSelected, assignedSelected, data])
 
     if (error) {
         return (
@@ -111,14 +111,16 @@ export default function Issues() {
                 <title>Cods | Issues</title>
             </Head>
 
+            <h1>Issues > {project}</h1>
+            <hr />
 
             <div className="row mb-4">
                 <SelectFilter
-                    options={projects}
+                    options={clients}
                     name="Clientes"
-                    changeSelected={setProjectSelected}
+                    changeSelected={setClientSelected}
                     issues={issues}
-                    type="project"
+                    type="client"
                 />
 
                 {/* <SelectFilter

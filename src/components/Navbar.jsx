@@ -1,25 +1,19 @@
 import Link from "next/link"
-import { useRouter } from "next/router"
+import { useFetch } from "../hooks/useFetch"
 export function Navbar() {
 
-    function textNavbar() {
+    const { data: projects, error } = useFetch('/projetos')
 
-        const { project } = useRouter().query
-        if (project === 'servicos') {
-            return 'Codificar - Serviços'
-        }
-
-        if(project === 'marketplace'){
-            return 'Codificar - Marketplace'
-        }
-        return 'Codificar'
+    if (!projects) {
+        return
     }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-success">
             <div className="container-fluid">
                 <Link href='/'>
                     <a className="navbar-brand text-white">
-                        {textNavbar()}
+                        Navbar
                     </a>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,27 +31,41 @@ export function Navbar() {
                                 Issues
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link href='/issues/marketplace'>
-                                    <a className="dropdown-item">Marketplace</a>
-                                </Link>
-                                <Link href='/issues/servicos'>
-                                    <a className="dropdown-item">Serviços</a>
-                                </Link>
 
+                                {projects.map(project => (
+                                    <Link
+                                        key={project.id}
+                                        href={`/issues/${project.slug}`}
+                                    >
+                                        <a className="dropdown-item">{project.name}</a>
+                                    </Link>
+                                ))}
                             </div>
+
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Clientes
+                            </a>
+                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                {projects.map(project => (
+                                    <Link
+                                        key={project.id}
+                                        href={`/clientes?project=${project.slug}`}
+                                    >
+                                        <a className="dropdown-item">{project.name}</a>
+                                    </Link>
+                                ))}
+                            </div>
+
                         </li>
                         <li className="nav-item">
                             <Link href='/projetos'>
                                 <a className="nav-link text-white">Projetos</a>
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link href='/configuracoes'>
-                                <a className="nav-link text-white">Configurações</a>
-                            </Link>
-                        </li>
                     </ul>
-
                 </div>
             </div>
         </nav>

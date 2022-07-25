@@ -29,7 +29,7 @@ export function IssuesColumn({ issues }) {
                         }
                         key={issue.id} >
                         <div className="d-flex w-100 justify-content-between ">
-                            <h6 className="mb-1 fs-8">{issue.project.name}</h6>
+                            <h6 className="mb-1 fs-8">{issue.client.name}</h6>
                             <small style={{ fontSize: 12 }}>{issue.id}</small>
                         </div>
                         {/* <hr /> */}

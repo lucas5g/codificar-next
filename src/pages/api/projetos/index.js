@@ -1,65 +1,53 @@
-import axios from 'axios'
-import { prisma } from '../../../../prisma/index.js'
-import { getProjects } from '../../../utils/fetch.js'
+import { json } from "express"
+import { prisma } from "../../../../prisma"
+import { convertSlug } from "../../../helpers"
 
-export default async function projects(req, res) {
-
+export default async function handler(req, res) {
 
     if (req.method === 'GET') {
 
-        const projects = await getProjects()
+        const projects = await prisma.project.findMany()
 
-        const { data: portal } = await axios.get(process.env.GITLAB_URL_TAG, {
-            headers: {
-                Authorization: `Bearer ${process.env.GITLAB_KEY}`
-            }
-        })
-        const { data: react } = await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
-            headers: {
-                Authorization: `Bearer ${process.env.GITLAB_KEY}`
-            }
-        })
-
-        return res.json({
-            projects,
-            lastTagWeb: portal[0].name,
-            lastTagReact: react[0].name
-        })
+        return res.json(projects)
 
     }
 
     if (req.method === 'POST') {
+        const { projectIdRedmine, name, channelRocket, qa } = req.body
+        if (!projectIdRedmine || !name || !channelRocket || !qa) {
+            return res
+                .status(401)
+                .json({ msg: 'Todos os campos são obrigatórios.' })
 
-        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status, extensionAndroid, urlUploadAndroid } = req.body
-
-        if (!name || !ios || !android || !extensionAndroid || !urlUploadAndroid) {
-            return res.status(401).json({
-                msg: 'Todos os campos são obrigatórios'
-            })
         }
 
-        const projectNameExist = await prisma.project.findUnique({ where: { name } })
+        const projectIdExist = await prisma.project.findFirst({ where: { projectIdRedmine } })
 
-        if (projectNameExist) {
-            return res.status(401).json({
-                msg: 'Já existe um projeto com este nome.'
-            })
+        if (projectIdExist) {
+            return res
+                .status(401)
+                .json({ msg: 'Esse projeto id do redmine já foi cadastrado' })
         }
+
+        if (await prisma.project.findFirst({ where: { name } })) {
+            return res
+                .status(401)
+                .json({ msg: 'Esse nome já foi cadastrado.' })
+        }
+
         const project = await prisma.project.create({
             data: {
+                projectIdRedmine,
                 name,
-                portal,
-                ios,
-                android,
-                versionWeb,
-                versionIos,
-                versionAndroid,
-                extensionAndroid,
-                urlUploadAndroid,
-                status: status === 'true' ? true : false
-            },
+                channelRocket,
+                qa,
+                slug: convertSlug(name)
+            }
         })
+        return res.json({ project })
 
-        return res.json(project)
+
     }
+
+    res.json({ msg: 'method not found' })
 }
