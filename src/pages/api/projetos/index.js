@@ -44,7 +44,7 @@ export default async function handler(req, res) {
                 slug: convertSlug(name)
             }
         })
-        return res.json({ project })
+        return res.json(project)
 
 
     }
