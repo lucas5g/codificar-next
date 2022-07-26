@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { mutate } from "swr";
 import { Input } from "../../components/Input";
 import { Spinner } from "../../components/Spinner";
 import { TextCenter } from "../../components/TextCenter";
@@ -11,17 +11,17 @@ import { api } from "../../services/api";
 export default function ProjectEdit() {
 
     // const [error, setError] = useState(false)
-    const [project, setProject] = useState({})
-    const [projects, setProjects] = useState([])
+    const [client, setClient] = useState({})
+    const [clients, setClients] = useState([])
 
     const [sendData, setSendData] = useState(false)
 
-    const { data, error } = useFetch('/projetos')
+    const { project } = useRouter().query
+    const { data, error } = useFetch(`/clientes?project=${project}`)
 
     useEffect(() => {
         if (data) {
-            console.log('fetch')
-            setProjects(data.projects)
+            setClients(data.clients)
         }
 
     }, [data])
@@ -37,7 +37,7 @@ export default function ProjectEdit() {
         return (
             <>
                 <Head>
-                    <title>Cods | Projetos</title>
+                    <title>Cods | Clientes</title>
                 </Head>
                 <Spinner />
             </>
@@ -53,9 +53,9 @@ export default function ProjectEdit() {
             </Head>
 
             <div className="d-flex justify-content-between">
-                <h1>Projetos Editar</h1>
+                <h1>Cliente &gt; {project} &gt; editar</h1>
                 <div>
-                    <Link href='/projetos'>
+                    <Link href={`/clientes?project=${project}`}>
                         <a className='btn btn-outline-success'>
                             Voltar
                         </a>
@@ -91,24 +91,24 @@ export default function ProjectEdit() {
                         </thead>
                         <tbody>
 
-                            {projects?.map((project, index) => (
+                            {clients?.map((client, index) => (
                                 <tr
-                                    className={project.status ? 'bg-success' : 'bg-danger'}
+                                    className={client.status ? 'bg-success' : 'bg-danger'}
                                     style={{
                                         "--bs-bg-opacity": .1
                                     }}
-                                    key={project.id}
-                                    title={`Editar ${project.name}`}
-                                    onClick={() => setProject(project)}
+                                    key={client.id}
+                                    title={`Editar ${client.name}`}
+                                    onClick={() => setClient(client)}
                                     role="button"
                                 >
 
                                     <th scope="row">{index + 1}</th>
-                                    <td>{project.name}</td>
-                                    <td>{project.versionWeb}</td>
-                                    <td>{project.versionAndroid}</td>
-                                    <td>{project.versionIos}</td>
-                                    <td>{project.status ? 'Ativo' : 'Desativado'}</td>
+                                    <td>{client.name}</td>
+                                    <td>{client.versionWeb}</td>
+                                    <td>{client.versionAndroid}</td>
+                                    <td>{client.versionIos}</td>
+                                    <td>{client.status ? 'Ativo' : 'Desativado'}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -116,10 +116,10 @@ export default function ProjectEdit() {
                 </div>
                 <div className="col-lg-6 mt-2">
                     <Form
-                        project={project}
-                        setProject={setProject}
-                        projects={projects}
-                        setProjects={setProjects}
+                        client={client}
+                        setClient={setClient}
+                        clients={clients}
+                        setClients={setClients}
                         // setUpdateList={setUpdateList}
                         sendData={sendData}
                         setSendData={setSendData}
@@ -130,15 +130,15 @@ export default function ProjectEdit() {
         </div>
     )
 }
-function Form({ project, setProject, projects, setProjects, setSendData, sendData }) {
+function Form({ client, setClient, clients, setClients, setSendData, sendData }) {
 
     // console.log(project)
 
     function handleChange(event) {
         const { name, value } = event.target
 
-        setProject({
-            ...project,
+        setClient({
+            ...client,
             [name]: value
         })
     }
@@ -148,16 +148,16 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
         <form 
             onSubmit={async (event) => {
             event.preventDefault()
-            if (!project.id) {
+            if (!client.id) {
 
                 try {
 
                     setSendData(true)
-                    const { data } = await api.post('/projetos', project)
+                    const { data } = await api.post('/clientes', project)
 
-                    const newListProjects = [...projects, data].sort((a, b) => a.name.localeCompare(b.name))
+                    const newListClients = [...clients, data].sort((a, b) => a.name.localeCompare(b.name))
 
-                    setProjects(newListProjects)
+                    setProjects(newListClients)
                     setProject(data)
                     // setProject({})
 
@@ -177,18 +177,18 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                 return
             }
 
-            api.put(`/projetos/${project.id}`, project)
+            api.put(`/clientes/${client.id}`, client)
                 .then(res => {
                     console.log(res.data)
 
-                    const updateProjects = projects.map(p => {
-                        if (p.id === project.id) {
-                            return project
+                    const updateClients = clients.map(c => {
+                        if (c.id === client.id) {
+                            return client
                         }
-                        return p
+                        return c
                     })
 
-                    setProjects(updateProjects)
+                    setClients(updateClients)
 
                 })
                 .catch(error => {
@@ -202,7 +202,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
             <Input
                 label='Nome'
                 name='name'
-                value={project.name || ''}
+                value={client.name || ''}
                 handleChange={handleChange}
                 placeholder='Nome do Cliente'
 
@@ -213,7 +213,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='Portal'
                         name='portal'
-                        value={project.portal || ''}
+                        value={client.portal || ''}
                         handleChange={handleChange}
                         placeholder='URL do Portal'
 
@@ -225,7 +225,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='Portal Tag'
                         name='versionWeb'
-                        value={project.versionWeb || ''}
+                        value={client.versionWeb || ''}
                         handleChange={handleChange}
                         placeholder='versão'
 
@@ -238,7 +238,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='Android'
                         name='android'
-                        value={project.android || ''}
+                        value={client.android || ''}
                         handleChange={handleChange}
                         placeholder='URL do Google Play'
 
@@ -248,7 +248,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='Android Tag'
                         name='versionAndroid'
-                        value={project.versionAndroid || ''}
+                        value={client.versionAndroid || ''}
                         handleChange={handleChange}
                         placeholder='Versão'
 
@@ -260,7 +260,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='Android Url Upload'
                         name='urlUploadAndroid'
-                        value={project.urlUploadAndroid || ''}
+                        value={client.urlUploadAndroid || ''}
                         placeholder='Url para upload do android'
                         handleChange={handleChange}
 
@@ -272,7 +272,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='Android .ext'
                         name='extensionAndroid'
-                        value={project.extensionAndroid || ''}
+                        value={client.extensionAndroid || ''}
                         placeholder='Extensão'
                         handleChange={handleChange}
 
@@ -286,7 +286,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='IOS'
                         name='ios'
-                        value={project.ios || ''}
+                        value={client.ios || ''}
                         handleChange={handleChange}
                         placeholder='URL da Apple Store'
 
@@ -297,7 +297,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                     <Input
                         label='IOS Tag'
                         name='versionIos'
-                        value={project.versionIos || ''}
+                        value={client.versionIos || ''}
                         handleChange={handleChange}
                         placeholder='Versão'
 
@@ -308,7 +308,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
                 label="Status"
                 name="status"
                 handleChange={handleChange}
-                value={project.status || ''}
+                value={client.status || ''}
 
             />
             {sendData &&
@@ -319,7 +319,7 @@ function Form({ project, setProject, projects, setProjects, setSendData, sendDat
             }
             {!sendData &&
                 <button type="submit" className="btn btn-primary btn-block">
-                    {project.id ? 'Atualizar' : 'Cadastrar'}
+                    {client.id ? 'Atualizar' : 'Cadastrar'}
                 </button>
             }
         </form>

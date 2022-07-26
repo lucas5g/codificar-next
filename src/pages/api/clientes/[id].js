@@ -4,19 +4,19 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
 
-        const project = await prisma.project.findUnique({
+        const client = await prisma.client.findUnique({
             where: {
                 id: Number(req.query.id)
             }
         })
-        return res.json(project)
+        return res.json(client)
     }
 
     if (req.method === 'PUT') {
         const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status, extensionAndroid, urlUploadAndroid } = req.body
 
         console.log({ status })
-        const project = await prisma.project.update({
+        const client = await prisma.client.update({
             data: {
                 name,
                 portal,
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
         })
 
 
-        res.json(project)
+        return res.json(client)
 
     }
 }

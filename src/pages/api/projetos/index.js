@@ -6,7 +6,9 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
 
-        const projects = await prisma.project.findMany()
+        const projects = await prisma.project.findMany({
+            orderBy: { name: 'asc' }
+        })
 
         return res.json(projects)
 
@@ -26,7 +28,7 @@ export default async function handler(req, res) {
         if (projectIdExist) {
             return res
                 .status(401)
-                .json({ msg: 'Esse projeto id do redmine já foi cadastrado' })
+                .json({ msg: 'Esse projeto id do redmine já foi cadastrado.' })
         }
 
         if (await prisma.project.findFirst({ where: { name } })) {

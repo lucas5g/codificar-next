@@ -29,18 +29,20 @@ export default function Project() {
         )
     }
 
-    const {projects, lastTagReact, lastTagWeb} = data
+    const {clients , lastTagReact, lastTagWeb} = data
 
     return (
         <div className="container-fluid mt-5 mb-3">
             <Head>
-                <title>Cods | Projetos</title>
+                <title>Cods | Clientes</title>
             </Head>
             <div className="d-flex justify-content-between ">
 
-                <h1>Projetos</h1>
+                <h1>
+                    Clientes &gt; {project}
+                </h1>
                 <div>
-                    <Link href='/clientes/editar'>
+                    <Link href={`/clientes/editar?project=${project}`}>
                         <a className='btn btn-outline-success'>
                             Editar
                         </a>
@@ -65,45 +67,46 @@ export default function Project() {
                         </thead>
                         <tbody>
 
-                            {projects?.filter(project => project.status).map((project, index) => (
+                            {clients?.filter(client =>  client.status).map((client, index) => (
 
-                                <tr key={project.name}>
+                                <tr key={client.id}>
+                                    {console.log({client})}
 
                                     <th scope="row">{index + 1}</th>
-                                    <td>{project.name}</td>
+                                    <td>{client.name}</td>
                                     <td>
-                                        <a href={project.portal}
+                                        <a href={client.portal}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${project.versionWeb === lastTagWeb ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${client.versionWeb === lastTagWeb ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                         >
-                                            {project.versionWeb}
+                                            {client.versionWeb}
                                         </a>
 
                                     </td>
                                     <td>
-                                        <a href={project.android}
+                                        <a href={client.android}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${project.versionAndroid === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${client.versionAndroid === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                         >
-                                            {project.versionAndroid}
+                                            {client.versionAndroid}
                                         </a>
 
                                     </td>
                                     <td>
-                                        <a href={project.ios}
+                                        <a href={client.ios}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${project.versionIos === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${client.versionIos === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                         >
-                                            {project.versionIos}
+                                            {client.versionIos}
                                         </a>
 
                                     </td>
@@ -121,24 +124,3 @@ export default function Project() {
 }
 
 
-// export async function getStaticProps() {
-
-//     const lastTagWeb = await getLastTagWeb()
-//     const lastTagReact = await getLastTagReact()
-//     const projects = await getProjects()
-//     // console.log({lastTagWeb, lastTagReact})
-
-//     // console.log('env ' + process.env.GITLAB_KEY)
-//     // console.log('env url ' + process.env.GITLAB_URL_TAG)
-
-//     // console.log('revalidate projetos')
-//     return {
-//         props: {
-//             projects,
-//             lastTagReact,
-//             lastTagWeb
-//         },
-//         revalidate: 60 
-//         // revalidate: 5
-//     }
-// }

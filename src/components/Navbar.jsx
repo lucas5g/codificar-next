@@ -4,9 +4,9 @@ export function Navbar() {
 
     const { data: projects, error } = useFetch('/projetos')
 
-    if (!projects) {
-        return
-    }
+    // if (!projects) {
+    //     return
+    // }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-success">
@@ -32,7 +32,7 @@ export function Navbar() {
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                {projects.map(project => (
+                                {projects?.map(project => (
                                     <Link
                                         key={project.id}
                                         href={`/issues/${project.slug}`}
@@ -49,7 +49,7 @@ export function Navbar() {
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                {projects.map(project => (
+                                {projects?.map(project => (
                                     <Link
                                         key={project.id}
                                         href={`/clientes?project=${project.slug}`}

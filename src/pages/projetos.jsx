@@ -4,13 +4,21 @@ import { Input } from "../components/Input";
 import { Spinner } from "../components/Spinner";
 import { TextCenter } from "../components/TextCenter";
 import { useFetch } from "../hooks/useFetch";
+import { api } from "../services/api";
 
 export default function Settings() {
 
+    const [projects, setProjects] = useState([])
     const [project, setProject] = useState({})
-    const { data: projects, error } = useFetch('/projetos')
+    const { data, error } = useFetch('/projetos')
 
-  
+    useEffect(() => {
+        if (data) {
+            setProjects(data)
+        }
+    }, [data])
+
+
     if (error) {
         return (
             <TextCenter text="Erro ao conectar com o servidor :(" height="80vh" />
@@ -19,7 +27,7 @@ export default function Settings() {
     }
 
 
-    if (!projects) {
+    if (!data) {
         return (
             <>
                 <Head>
@@ -35,7 +43,7 @@ export default function Settings() {
             <Head>
                 <title>Cods | Configurações</title>
             </Head>
-            <h1>Configurações</h1>
+            <h1>Projetos</h1>
             <hr />
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-6">
@@ -74,6 +82,8 @@ export default function Settings() {
                     <Form
                         project={project}
                         setProject={setProject}
+                        projects={projects}
+                        setProjects={setProjects}
 
                     />
                 </div>
@@ -83,11 +93,11 @@ export default function Settings() {
 }
 
 
-function Form({ project }) {
+function Form({ project, setProject, projects, setProjects }) {
 
     function handleChange(event) {
         const { name, value } = event.target
-
+        // console.log({name, value})
         setProject({
             ...project,
             [name]: value
@@ -95,40 +105,92 @@ function Form({ project }) {
     }
 
     return (
-        <form>
+        <form
+            onSubmit={async (event) => {
+                event.preventDefault()
+
+                if (!project.id) {
+                    console.log({ project })
+                    try {
+                        const { data } = await api.post('/projetos', project)
+                        const newListProjects = [...projects, data].sort((a, b) => a.name.localeCompare(b.name))
+
+                        setProjects(newListProjects)
+                        setProject(data)
+                    } catch (error) {
+                        console.log(error)
+                        console.log(error.response)
+                        if (error.response.data) {
+                            const { msg } = error.response.data
+                            alert(msg)
+                        }
+                        // if(error.response)
+                    }
+                    return
+                }
+
+                try {
+
+                    await api.put(`/projetos/${project.id}`, project)
+
+                    const updateProjects = projects.map(p => {
+                        if(p.id === project.id){
+                            return project
+                        }
+                        return p 
+                    })
+                    setProjects(updateProjects)
+
+                } catch (error) {
+                    console.log(error)
+                    alert('Erro ao atualizar.')
+                }
+
+            }}>
             <Input
                 label="Nome"
                 name="name"
                 placeholder="Nome do grupo do projeto"
                 value={project.name || ''}
-                onChange={handleChange}
+                handleChange={handleChange}
 
             />
             <Input
-                label="Projeto ID Redmine"
+                label="ID Redmine"
                 name="projectIdRedmine"
                 placeholder="Projeto ID Redmine"
                 value={project.projectIdRedmine || ''}
-                onChange={handleChange}
+                handleChange={handleChange}
             />
             <Input
                 label="Canal Rocket"
                 name="channelRocket"
                 placeholder="Ex: #marketplace"
                 value={project.channelRocket || ''}
-                onChange={handleChange}
+                handleChange={handleChange}
             />
             <Input
                 label="QA"
                 name="qa"
                 placeholder="Ex: @lucas.sousa"
                 value={project.qa || ''}
-                onChange={handleChange}
+                handleChange={handleChange}
             />
-            <button type="submit" className="btn btn-primary btn-block">
+
+
+
+            <button type="submit" className="btn btn-primary mx-1">
                 {project.id ? 'Atualizar' : 'Cadastrar'}
             </button>
 
-        </form>
+            <button
+                type="button"
+                className="btn btn-secondary ml-5"
+                onClick={() => setProject({})}
+            >
+                Cancelar
+            </button>
+
+        </form >
     )
 }
