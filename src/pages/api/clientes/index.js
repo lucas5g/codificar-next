@@ -1,22 +1,32 @@
 import axios from 'axios'
 import { prisma } from '../../../../prisma/index.js'
-import { getClients, getLastTagReact, getLastTagWeb } from '../../../utils/fetch.js'
+import { getClients, getLastTag } from '../../../utils/fetch.js'
 
 export default async function projects(req, res) {
 
 
-    const { project } = req.query
 
     if (req.method === 'GET') {
 
-        const clients = await getClients()
-        const lastTagWeb = await getLastTagWeb()
-        const lastTagReact = await getLastTagReact()
+        const project = await prisma.project.findFirst({
+            where: {
+                slug: req.query.project
+            }
+        })
 
+        // console.log({ project })
+
+        const clients = await getClients({ projectId: project.id })
+        const lastTagWeb = await getLastTag({ projectIdGit: project.projectIdGitWeb })
+        const lastTagUser = await getLastTag({ projectIdGit: project.projectIdGitUser })
+        const lastTagProvider = await getLastTag({ projectIdGit: project.projectIdGitProvider })
+
+        // console.log({ clients, lastTagWeb })
         return res.json({
             clients,
             lastTagWeb,
-            lastTagReact
+            lastTagUser,
+            lastTagProvider
         })
 
     }

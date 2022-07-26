@@ -9,14 +9,18 @@ datasource db {
 }
 
 model Project {
-    id               Int      @id @default(autoincrement())
-    projectIdRedmine String   @unique
-    name             String   @unique
-    slug             String?   @unique 
-    channelRocket    String
-    qa               String
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @default(now()) @updatedAt
+    id                   Int      @id @default(autoincrement())
+    projectIdRedmine     String   @unique
+    name                 String   @unique
+    slug                 String?  @unique
+    channelRocket        String
+    qa                   String
+    projectIdGitUser     Int
+    projectIdGitProvider Int?
+    projectIdGitWeb      Int
+    createdAt            DateTime @default(now())
+    updatedAt            DateTime @default(now()) @updatedAt
+    Client               Client[]
 
     @@map("projects")
 }
@@ -33,8 +37,10 @@ model Client {
     extensionAndroid String   @db.VarChar(5)
     urlUploadAndroid String   @db.VarChar(200)
     status           Boolean  @default(true)
+    project          Project  @relation(fields: [projectId], references: [id])
     createdAt        DateTime @default(now())
     updatedAt        DateTime @default(now()) @updatedAt
+    projectId        Int
 
     @@map("clients")
 }

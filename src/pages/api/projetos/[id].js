@@ -20,9 +20,9 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'PUT') {
-        const { projectIdRedmine, name, channelRocket, qa } = req.body
+        const { projectIdRedmine, name, channelRocket, qa, projectIdGitUser, projectIdGitProvider, projectIdGitWeb } = req.body
 
-        if (!projectIdRedmine || !name || !channelRocket || !qa) {
+        if (!projectIdRedmine || !name || !channelRocket || !qa || !projectIdGitUser || !projectIdGitWeb) {
             return res
                 .status(401)
                 .json({ msg: 'Todos os campos são obrigatórios.' })
@@ -38,7 +38,10 @@ export default async function handler(req, res) {
                 name,
                 channelRocket,
                 qa,
-                slug: convertSlug(name)
+                slug: convertSlug(name),
+                projectIdGitProvider: Number(projectIdGitProvider),
+                projectIdGitUser,
+                projectIdGitWeb
             }
         })
 

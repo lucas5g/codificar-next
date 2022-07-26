@@ -54,6 +54,9 @@ export default function Settings() {
                                 <th scope="col">Nome</th>
                                 <th scope="col">Redmine ID</th>
                                 <th scope="col">Canal Rocket</th>
+                                {/* <th scope="col">Git Web</th>
+                                <th scope="col">Git User</th>
+                                <th scope="col">Git Provider</th>                                 */}
                                 <th scope="col">QA</th>
                             </tr>
 
@@ -134,10 +137,10 @@ function Form({ project, setProject, projects, setProjects }) {
                     await api.put(`/projetos/${project.id}`, project)
 
                     const updateProjects = projects.map(p => {
-                        if(p.id === project.id){
+                        if (p.id === project.id) {
                             return project
                         }
-                        return p 
+                        return p
                     })
                     setProjects(updateProjects)
 
@@ -162,20 +165,60 @@ function Form({ project, setProject, projects, setProjects }) {
                 value={project.projectIdRedmine || ''}
                 handleChange={handleChange}
             />
-            <Input
-                label="Canal Rocket"
-                name="channelRocket"
-                placeholder="Ex: #marketplace"
-                value={project.channelRocket || ''}
-                handleChange={handleChange}
-            />
-            <Input
-                label="QA"
-                name="qa"
-                placeholder="Ex: @lucas.sousa"
-                value={project.qa || ''}
-                handleChange={handleChange}
-            />
+            <div className="row">
+                <div className="col-lg-6">
+                    <Input
+                        label="Canal Rocket"
+                        name="channelRocket"
+                        placeholder="Ex: #marketplace"
+                        value={project.channelRocket || ''}
+                        handleChange={handleChange}
+                    />
+                </div>
+                <div className="col-lg-6">
+                    <Input
+                        label="QA"
+                        name="qa"
+                        placeholder="Ex: @lucas.sousa"
+                        value={project.qa || ''}
+                        handleChange={handleChange}
+                    />
+
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-lg-4">
+                    <Input
+                        type="number"
+                        label="Git Web"
+                        name="projectIdGitWeb"
+                        placeholder="Git Web Id"
+                        value={project.projectIdGitWeb || ''}
+                        handleChange={handleChange}
+                    />
+                </div>
+                <div className="col-lg-4">
+                    <Input
+                        type="number"
+                        label="Git User"
+                        placeholder="Git User Id"
+                        name="projectIdGitUser"
+                        value={project.projectIdGitUser || ''}
+                        handleChange={handleChange}
+                    />
+                </div>
+                <div className="col-lg-4">
+                    <Input
+                        type="number"
+                        label="Git Provider"
+                        placeholder="Git Provider Id"
+                        name="projectIdGitProvider"
+                        value={project.projectIdGitProvider || ''}
+                        handleChange={handleChange}
+                        required={false}
+                    />
+                </div>
+            </div>
 
 
 

@@ -29,7 +29,8 @@ export default function Project() {
         )
     }
 
-    const {clients , lastTagReact, lastTagWeb} = data
+    const {clients , lastTagUser, lastTagProvider, lastTagWeb} = data
+    console.log({lastTagUser, lastTagProvider})
 
     return (
         <div className="container-fluid mt-5 mb-3">
@@ -70,7 +71,6 @@ export default function Project() {
                             {clients?.filter(client =>  client.status).map((client, index) => (
 
                                 <tr key={client.id}>
-                                    {console.log({client})}
 
                                     <th scope="row">{index + 1}</th>
                                     <td>{client.name}</td>
@@ -91,7 +91,7 @@ export default function Project() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${client.versionAndroid === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${client.versionAndroid === lastTagUser ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                         >
                                             {client.versionAndroid}
@@ -103,7 +103,7 @@ export default function Project() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${client.versionIos === lastTagReact ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${client.versionIos === lastTagUser ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                         >
                                             {client.versionIos}

@@ -64,7 +64,7 @@ export default function ProjectEdit() {
 
                     <button className='btn btn-outline-primary ml-5'
                         onClick={() => {
-                            setProject({})
+                            setClient({})
                             document.getElementById('name').focus()
                         }}
                     >
@@ -270,7 +270,7 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
                 <div className="col-lg-2">
 
                     <Input
-                        label='Android .ext'
+                        label='Apk ou Abb'
                         name='extensionAndroid'
                         value={client.extensionAndroid || ''}
                         placeholder='Extensão'
