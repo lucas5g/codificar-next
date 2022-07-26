@@ -3,9 +3,10 @@ import { useFetch } from "../hooks/useFetch"
 export function Navbar() {
 
     const { data: projects, error } = useFetch('/projetos')
+    // console.log({ projects })
 
-    // if (!projects) {
-    //     return
+    // if (true) {
+    //     return <h1>test</h1>
     // }
 
     return (
