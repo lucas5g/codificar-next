@@ -52,6 +52,10 @@ cron.schedule('12 * * * *', () => {
 
 (async() => {
 
+    const { data } = axios.get('https://redimene.codificar.com.br?project_id="uber-servicos"')
+
+    console.log(data)
+
 })()
 
 /**
