@@ -15,9 +15,9 @@ model Project {
     slug                 String?  @unique
     channelRocket        String
     qa                   String
+    projectIdGitWeb      Int
     projectIdGitUser     Int
     projectIdGitProvider Int?
-    projectIdGitWeb      Int
     createdAt            DateTime @default(now())
     updatedAt            DateTime @default(now()) @updatedAt
     Client               Client[]
@@ -26,21 +26,26 @@ model Project {
 }
 
 model Client {
-    id               Int      @id @default(autoincrement())
-    name             String   @unique
-    portal           String
-    ios              String
-    android          String
-    versionWeb       String?
-    versionIos       String?
-    versionAndroid   String?
-    extensionAndroid String   @db.VarChar(5)
-    urlUploadAndroid String   @db.VarChar(200)
-    status           Boolean  @default(true)
-    project          Project  @relation(fields: [projectId], references: [id])
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @default(now()) @updatedAt
-    projectId        Int
+    id                       Int      @id @default(autoincrement())
+    name                     String   @unique
+    web                      String
+    iosUser                  String
+    iosProvider              String?
+    androidUser              String
+    androidProvider          String?
+    versionWeb               String
+    versionIosUser           String
+    versionIosProvider       String?
+    versionAndroidUser       String
+    versionAndroidProvider   String?
+    extensionAndroid         String
+    urlUploadAndroidUser     String
+    urlUploadAndroidProvider String?
+    status                   Boolean  @default(true)
+    project                  Project  @relation(fields: [projectId], references: [id])
+    projectId                Int
+    createdAt                DateTime @default(now())
+    updatedAt                DateTime @default(now()) @updatedAt
 
     @@map("clients")
 }

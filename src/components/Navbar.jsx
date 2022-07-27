@@ -3,11 +3,13 @@ import { useFetch } from "../hooks/useFetch"
 export function Navbar() {
 
     const { data: projects, error } = useFetch('/projetos')
-    // console.log({ projects })
 
-    // if (true) {
-    //     return <h1>test</h1>
-    // }
+    useFetch('/issues/marketplace')
+    useFetch('/issues/servicos')
+
+    useFetch('/clientes/?project=marketplace')
+    
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-success">

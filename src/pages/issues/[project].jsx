@@ -47,7 +47,6 @@ export default function Issues() {
 
         const { issues, clients, trackers, assigneds } = data
 
-        console.log({ issues })
         let issuesFilter = issues
 
         issuesFilter = clientSelected === ''

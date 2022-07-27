@@ -7,18 +7,6 @@ const prisma = new PrismaClient();
 
 (async() => {
 
-
-    clientsMp.forEach(async(client) => {
-        await prisma.client.upsert({
-            where: {
-                id: client.id
-            },
-            update: client,
-            create: client
-        })
-        console.log(`${client.name} cliente atualizado!`)
-    })
-
     projects.forEach(async(project) => {
 
         await prisma.project.upsert({
@@ -32,6 +20,15 @@ const prisma = new PrismaClient();
     })
 
 
-
+    clientsMp.forEach(async(client) => {
+        await prisma.client.upsert({
+            where: {
+                id: client.id
+            },
+            update: client,
+            create: client
+        })
+        console.log(`${client.name} cliente atualizado!`)
+    })
 
 })()

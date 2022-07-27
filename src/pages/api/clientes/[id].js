@@ -13,22 +13,12 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'PUT') {
-        const { name, portal, ios, android, versionWeb, versionIos, versionAndroid, status, extensionAndroid, urlUploadAndroid } = req.body
+        const { body } = req
 
-        console.log({ status })
+        body.status = (body.status === true || body.status === 'true') ? true : false
+
         const client = await prisma.client.update({
-            data: {
-                name,
-                portal,
-                ios,
-                android,
-                versionWeb,
-                versionIos,
-                versionAndroid,
-                extensionAndroid,
-                urlUploadAndroid,
-                status: (status === 'true' || status === true) ? true : false
-            },
+            data: body,
             where: {
                 id: Number(req.query.id)
             }
