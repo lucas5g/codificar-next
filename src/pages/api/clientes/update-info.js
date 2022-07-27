@@ -1,31 +1,31 @@
 import axios from 'axios';
 import puppeteer from 'puppeteer';
 
-import { prisma } from "../../../../../prisma/index.js"
+import { prisma } from "../../../../prisma/index.js"
+import { getLastTag, getProject } from '../../../utils/fetch.js';
 
 export default async function handler(req, res) {
 
-    const { platform } = req.query
-    const { data: portal } = await axios.get(process.env.GITLAB_URL_TAG, {
-        headers: {
-            Authorization: `Bearer ${process.env.GITLAB_KEY}`
-        }
-    })
-    const { data: react } = await axios.get('https://git.codificar.com.br/api/v4/projects/238/repository/tags', {
-        headers: {
-            Authorization: `Bearer ${process.env.GITLAB_KEY}`
-        }
+    const { platform, projectSlug } = req.query
+
+    const project = await getProject({ projectSlug })
+    const lastTagWeb = await getLastTag({ projectIdGit: project.projectIdGitWeb })
+    const lastTagUser = await getLastTag({ projectIdGit: project.projectIdGitUser })
+
+    return res.json({
+        project,
+        lastTagWeb,
+        lastTagUser
     })
 
-    const lastTagWeb = portal[0].name
-    const lastTagReact = react[0].name
 
+    return res.json({ lastTagWeb, lastTagUser })
 
 
 
     console.log(`Atualizando as informações do ${platform}`)
 
-    if (platform === 'portal') {
+    if (platform === 'web') {
 
         const projects = await prisma.project.findMany({
             orderBy: [{
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
             setTimeout(async() => {
 
 
-                const infoPortal = await getInfoPortal({ portal: project.portal, name: project.name, index })
+                const infoPortal = await getInfoWeb({ portal: project.portal, name: project.name, index })
 
                 await prisma.project.update({
                     where: { name: project.name },
@@ -130,7 +130,7 @@ export default async function handler(req, res) {
 
 }
 
-async function getInfoPortal({ portal, name, index }) {
+async function getInfoWeb({ portal, name, index }) {
     const browser = await puppeteer.launch({
         headless: true,
         args: [

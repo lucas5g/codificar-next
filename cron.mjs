@@ -1,68 +1,57 @@
 import cron from 'node-cron'
 import axios from 'axios';
-
-// cron.schedule('10 9-21 * * 1-5', () => {
-//     console.log('Update version projects')
-//         // axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info')
-//         // projectsVersion()
-// });
+import 'dotenv/config'
 
 const minute = 10
 const time = minute => `*/${minute} 9-20 * * 1-5`
 
+/**
+ * Web marketplace') 
+ */
 cron.schedule(time(minute), () => {
 
-    // cron.schedule('* * * * *', () => {
-    console.log('cron portal')
-    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/portal')
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/clientes/update-info`, {
+        params: {
+            platform: 'web',
+            project: 'marketplace'
+        }
+    })
 })
 
-
+/**
+ * Ios user marketplace
+ */
 cron.schedule(time(minute + 2), () => {
-    console.log('cron ios')
-    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/ios')
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/clientes/update-info/ios-user`)
 })
 
+/**
+ * Android user marketplace
+ */
 cron.schedule(time(minute + 4), () => {
-    console.log('cron android')
-    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/projetos/update-info/android')
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/clientes/update-info/android-user`)
 })
 
 
-cron.schedule('22 1,4 * * *', () => {
-    console.log("Cron log test")
-});
-
-cron.schedule('23 58 * * 1-5', () => {
+cron.schedule('57 23 * * 1-5', () => {
     console.log('cron report daily')
-    axios.get('http://version.aplicativoderestaurante.com.br:3000/api/issues/report')
+        // axios.get('http://version.aplicativoderestaurante.com.br:3000/api/issues/report')
+})
+
+cron.schedule('12 * * * *', () => {
+    updateInfoWeb()
 })
 
 
-// import { pointRecord } from '../bot/point-record.js'
-// cron.schedule('20 9,14 * * 1-5', () => {
-//     console.log('Running report ponto')
-//     console.log('new Date()')
-//     pointRecord();
-// });
+
+;
+
+
+
 
 
 (async() => {
-    console.log('Cron node')
-    console.log(new Date())
-        // axios.get('http://localhost:3000/api/projetos/update-info')
 
-    // const projects = await prisma.project.findMany()
-
-    // console.log(projects)
-
-    // console.log(new Date())
-    // pointRecord();
-    // console.log(await projectsVersion())
-
-    // const date = new Date()
-    // console.log(date)
-    // console.log('test')
 })()
 
 /**

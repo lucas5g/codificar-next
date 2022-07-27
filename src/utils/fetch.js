@@ -1,5 +1,5 @@
 import axios from "axios"
-import { prisma } from "../../prisma/index.js"
+import { prisma } from "../../prisma"
 
 export const getClients = async({ projectId }) => {
     return await prisma.client.findMany({
@@ -21,4 +21,12 @@ export const getLastTag = async({ projectIdGit }) => {
     })
 
     return data[0].name
+}
+
+export const getProject = async({ projectSlug }) => {
+    const project = await prisma.project.findFirst({
+        where: { slug: projectSlug }
+    })
+
+    return project
 }

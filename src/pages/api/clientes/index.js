@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { prisma } from '../../../../prisma/index.js'
+import { prisma } from '../../../../prisma'
 import { getClients, getLastTag } from '../../../utils/fetch.js'
 
 export default async function projects(req, res) {
@@ -14,14 +14,13 @@ export default async function projects(req, res) {
             }
         })
 
-        // console.log({ project })
+        console.log({ project })
 
         const clients = await getClients({ projectId: project.id })
         const lastTagWeb = await getLastTag({ projectIdGit: project.projectIdGitWeb })
         const lastTagUser = await getLastTag({ projectIdGit: project.projectIdGitUser })
         const lastTagProvider = await getLastTag({ projectIdGit: project.projectIdGitProvider })
 
-        // console.log({ clients, lastTagWeb })
         return res.json({
             clients,
             lastTagWeb,

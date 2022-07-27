@@ -1,5 +1,5 @@
 import { json } from "express"
-import { prisma } from "../../../../prisma"
+import { prisma } from "../../../../prisma/index.js"
 import { convertSlug } from "../../../helpers"
 
 export default async function handler(req, res) {
