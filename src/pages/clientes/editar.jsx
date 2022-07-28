@@ -8,9 +8,8 @@ import { TextCenter } from "../../components/TextCenter";
 import { useFetch } from "../../hooks/useFetch";
 import { api } from "../../services/api";
 
-export default function ProjectEdit() {
+export default function ClientEdit() {
 
-    // const [error, setError] = useState(false)
     const [client, setClient] = useState({})
     const [clients, setClients] = useState([])
 
@@ -22,6 +21,7 @@ export default function ProjectEdit() {
     useEffect(() => {
         if (data) {
             setClients(data.clients)
+            setClient({...client, projectId: data.projectId})
         }
 
     }, [data])
@@ -45,11 +45,10 @@ export default function ProjectEdit() {
 
     }
 
-    // const { projects } = data
     return (
         <div className="container-fluid mt-5">
             <Head>
-                <title>Cods | Projetos </title>
+                <title>Cods | Clientes </title>
             </Head>
 
             <div className="d-flex justify-content-between">
@@ -82,9 +81,9 @@ export default function ProjectEdit() {
                             <tr>
                                 <th scope="col">N°</th>
                                 <th scope="col">Nome</th>
-                                <th scope="col">Portal</th>
-                                <th scope="col">Android</th>
-                                <th scope="col">IOS</th>
+                                <th scope="col">Web</th>
+                                <th scope="col">Android User</th>
+                                <th scope="col">IOS User</th>
                                 <th scope="col">Status</th>
                             </tr>
 
@@ -106,8 +105,8 @@ export default function ProjectEdit() {
                                     <th scope="row">{index + 1}</th>
                                     <td>{client.name}</td>
                                     <td>{client.versionWeb}</td>
-                                    <td>{client.versionAndroid}</td>
-                                    <td>{client.versionIos}</td>
+                                    <td>{client.versionAndroidUser}</td>
+                                    <td>{client.versionIosUser}</td>
                                     <td>{client.status ? 'Ativo' : 'Desativado'}</td>
                                 </tr>
                             ))}
@@ -153,12 +152,12 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
                 try {
 
                     setSendData(true)
-                    const { data } = await api.post('/clientes', project)
+                    const { data } = await api.post('/clientes', client)
 
                     const newListClients = [...clients, data].sort((a, b) => a.name.localeCompare(b.name))
 
-                    setProjects(newListClients)
-                    setProject(data)
+                    setClients(newListClients)
+                    setClient(data)
                     // setProject({})
 
 
@@ -211,9 +210,9 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
                 <div className="col-lg-10">
 
                     <Input
-                        label='Portal'
-                        name='portal'
-                        value={client.portal || ''}
+                        label='Web'
+                        name='web'
+                        value={client.web || ''}
                         handleChange={handleChange}
                         placeholder='URL do Portal'
 
@@ -223,11 +222,11 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
                 <div className="col-lg-2">
 
                     <Input
-                        label='Portal Tag'
+                        label='Web Tag'
                         name='versionWeb'
                         value={client.versionWeb || ''}
                         handleChange={handleChange}
-                        placeholder='versão'
+                        placeholder='Versão'
 
 
                     />
@@ -236,9 +235,9 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
             <div className="row">
                 <div className="col-lg-10">
                     <Input
-                        label='Android'
-                        name='android'
-                        value={client.android || ''}
+                        label='Android User'
+                        name='androidUser'
+                        value={client.androidUser || ''}
                         handleChange={handleChange}
                         placeholder='URL do Google Play'
 
@@ -246,9 +245,9 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
                 </div>
                 <div className="col-lg-2">
                     <Input
-                        label='Android Tag'
-                        name='versionAndroid'
-                        value={client.versionAndroid || ''}
+                        label='User Tag'
+                        name='versionAndroidUser'
+                        value={client.versionAndroidUser || ''}
                         handleChange={handleChange}
                         placeholder='Versão'
 
@@ -258,9 +257,9 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
             <div className="row">
                 <div className="col-lg-10">
                     <Input
-                        label='Android Url Upload'
-                        name='urlUploadAndroid'
-                        value={client.urlUploadAndroid || ''}
+                        label='Android User Url Upload'
+                        name='urlUploadAndroidUser'
+                        value={client.urlUploadAndroidUser || ''}
                         placeholder='Url para upload do android'
                         handleChange={handleChange}
 
@@ -284,9 +283,9 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
                 <div className="col-lg-10">
 
                     <Input
-                        label='IOS'
-                        name='ios'
-                        value={client.ios || ''}
+                        label='IOS User'
+                        name='iosUser'
+                        value={client.iosUser || ''}
                         handleChange={handleChange}
                         placeholder='URL da Apple Store'
 
@@ -295,9 +294,9 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
                 <div className="col-lg-2">
 
                     <Input
-                        label='IOS Tag'
-                        name='versionIos'
-                        value={client.versionIos || ''}
+                        label='User Tag'
+                        name='versionIosUser'
+                        value={client.versionIosUser || ''}
                         handleChange={handleChange}
                         placeholder='Versão'
 

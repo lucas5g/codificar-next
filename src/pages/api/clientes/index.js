@@ -23,7 +23,8 @@ export default async function projects(req, res) {
             clients,
             lastTagWeb,
             lastTagUser,
-            lastTagProvider
+            lastTagProvider,
+            projectId: project.id
         })
 
     }
@@ -34,7 +35,8 @@ export default async function projects(req, res) {
         const { body } = req
         body.status = (body.status === true || body.status === 'true') ? true : false
 
-
+        // console.log(body)
+        // return res.json(body)
         const clientNameExist = await prisma.client.findUnique({ where: { name: body.name } })
 
         if (clientNameExist) {

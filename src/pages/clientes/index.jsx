@@ -30,7 +30,6 @@ export default function Project() {
     }
 
     const {clients , lastTagUser, lastTagProvider, lastTagWeb} = data
-    console.log({lastTagUser, lastTagProvider})
 
     return (
         <div className="container-fluid mt-5 mb-3">
@@ -61,9 +60,12 @@ export default function Project() {
                             <tr>
                                 <th scope="col">N°</th>
                                 <th scope="col">Nome</th>
-                                <th scope="col">Portal</th>
-                                <th scope="col">Android</th>
-                                <th scope="col">IOS</th>
+                                <th scope="col">Web</th>
+                                <th scope="col">Android User</th>
+                                {/* <th scope="col">Android Provider</th> */}
+                                <th scope="col">IOS User</th>
+                                {/* <th scope="col">IOS Provider</th> */}
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +77,7 @@ export default function Project() {
                                     <th scope="row">{index + 1}</th>
                                     <td>{client.name}</td>
                                     <td>
-                                        <a href={client.portal}
+                                        <a href={client.web}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
@@ -87,26 +89,26 @@ export default function Project() {
 
                                     </td>
                                     <td>
-                                        <a href={client.android}
+                                        <a href={client.androidUser}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${client.versionAndroid === lastTagUser ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${client.versionAndroidUser === lastTagUser ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                         >
-                                            {client.versionAndroid}
+                                            {client.versionAndroidUser}
                                         </a>
 
                                     </td>
                                     <td>
-                                        <a href={client.ios}
+                                        <a href={client.iosUser}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={`btn 
-                                                ${client.versionIos === lastTagUser ? 'btn-outline-success' : 'btn-outline-danger'}
+                                                ${client.versionIosUser === lastTagUser ? 'btn-outline-success' : 'btn-outline-danger'}
                                             `}
                                         >
-                                            {client.versionIos}
+                                            {client.versionIosUser}
                                         </a>
 
                                     </td>
