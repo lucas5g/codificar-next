@@ -1,15 +1,7 @@
 import Link from "next/link"
-import { useFetch } from "../hooks/useFetch"
+import { projects } from "../../prisma/seed/projects.mjs"
+
 export function Navbar() {
-
-    const { data: projects, error } = useFetch('/projetos')
-
-    useFetch('/issues/marketplace')
-    useFetch('/issues/servicos')
-
-    useFetch('/clientes/?project=marketplace')
-    
-
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-success">
@@ -23,7 +15,7 @@ export function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0 ">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
                         <li className="nav-item">
                             <Link href='/'>
                                 <a className="nav-link text-white active" aria-current="page">Home</a>
@@ -63,11 +55,11 @@ export function Navbar() {
                             </div>
 
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link href='/projetos'>
                                 <a className="nav-link text-white">Projetos</a>
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>
