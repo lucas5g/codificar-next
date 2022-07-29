@@ -39,21 +39,21 @@ import moment from 'moment';
 
 
 
-    closeTask.map((issue, index) => {
-        setTimeout(() => {
-            const url = `https://redmine.codificar.com.br/issues/${issue.id}.json?key=${process.env.REDMINE_KEY}`
-            console.log(url)
-            axios.put(url, {
-                "issue": {
-                    "assigned_to_id": 338,
-                    "status_id": 6,
-                    "start_date": "2022-07-28",
-                    "due_date": "2022-07-28",
-                    "estimated_hours": 1
-                }
-            })
-        }, index * 677)
-    })
+    // closeTask.map((issue, index) => {
+    //     setTimeout(() => {
+    //         const url = `https://redmine.codificar.com.br/issues/${issue.id}.json?key=${process.env.REDMINE_KEY}`
+    //         console.log(url)
+    //         axios.put(url, {
+    //             "issue": {
+    //                 "assigned_to_id": 338,
+    //                 "status_id": 6,
+    //                 "start_date": "2022-07-28",
+    //                 "due_date": "2022-07-28",
+    //                 "estimated_hours": 1
+    //             }
+    //         })
+    //     }, index * 677)
+    // })
 
     // {
     //     assigne

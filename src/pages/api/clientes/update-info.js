@@ -12,14 +12,13 @@ export default async function handler(req, res) {
     const lastTagWeb = await getLastTag({ projectIdGit: project.projectIdGitWeb })
     const lastTagUser = await getLastTag({ projectIdGit: project.projectIdGitUser })
 
-    return res.json({
-        project,
-        lastTagWeb,
-        lastTagUser
-    })
+    // return res.json({
+    //     project,
+    //     lastTagWeb,
+    //     lastTagUser
+    // })
 
-
-    return res.json({ lastTagWeb, lastTagUser })
+    // return res.json({ lastTagWeb, lastTagUser })
 
 
 
@@ -27,7 +26,7 @@ export default async function handler(req, res) {
 
     if (platform === 'web') {
 
-        const projects = await prisma.project.findMany({
+        const projects = await prisma.client.findMany({
             orderBy: [{
                 name: 'asc'
             }],
@@ -35,15 +34,16 @@ export default async function handler(req, res) {
                 NOT: {
                     versionWeb: lastTagWeb
                 },
-                status: {
-                    equals: true
-                }
+                status: true,
+                projectId: project.id
             }
         })
 
-        console.log('Total projects: ' + projects.length)
-            // console.log({ projects })
-            // return
+        console.log('Total Clientes: ' + projects.length)
+        console.log({ projects })
+            // return res.json({ msg: 'Atualizando as informações dos cliente web' })
+
+
 
         projects.map(async(project, index) => {
             setTimeout(async() => {
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
     }
 
-    if (platform === 'ios') {
+    if (platform === 'ios-user') {
         const projects = await prisma.project.findMany({
             orderBy: [{
                 name: 'asc'
@@ -96,7 +96,7 @@ export default async function handler(req, res) {
         })
     }
 
-    if (platform === 'android') {
+    if (platform === 'android-user') {
         const projects = await prisma.project.findMany({
             orderBy: [{
                 name: 'asc'
@@ -125,7 +125,7 @@ export default async function handler(req, res) {
         })
     }
 
-    res.json({ msg: 'Atualizando as informações dos projetos' })
+    res.json({ msg: `Atualizando as informações dos clientes ${platform}` })
 
 
 }
