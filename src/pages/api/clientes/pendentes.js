@@ -1,13 +1,13 @@
 import { prisma } from "../../../../prisma/index.js"
-import { getLastTagReact, getLastTagWeb } from "../../../utils/fetch"
+import { getLastTag } from "../../../utils/fetch"
 
 export default async function handler(req, res) {
 
 
     // return res.json({msg: 'teste api'})
 
-    const lastTagWeb = await getLastTagWeb()
-    const lastTagReact = await getLastTagReact()
+    const lastTagWeb = await getLastTag()
+    const lastTagReact = await getLastTag()
 
     const projectsWeb = await prisma.project.findMany({
         where: {

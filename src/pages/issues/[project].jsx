@@ -110,7 +110,7 @@ export default function Issues() {
                 <title>Cods | Issues</title>
             </Head>
 
-            <h1>Issues > {project}</h1>
+            <h1>Issues &gt; {project}</h1>
             <hr />
 
             <div className="row mb-4">

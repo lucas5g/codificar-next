@@ -20,8 +20,9 @@ export default function ClientEdit() {
 
     useEffect(() => {
         if (data) {
+            console.log('mudou')
             setClients(data.clients)
-            setClient({...client, projectId: data.projectId})
+            // setClient({...client, projectId: data.projectId})
         }
 
     }, [data])
@@ -45,6 +46,7 @@ export default function ClientEdit() {
 
     }
 
+    const {projectId} = data
     return (
         <div className="container-fluid mt-5">
             <Head>
@@ -122,6 +124,7 @@ export default function ClientEdit() {
                         // setUpdateList={setUpdateList}
                         sendData={sendData}
                         setSendData={setSendData}
+                        projectId={projectId}
                     />
                 </div>
 
@@ -129,7 +132,7 @@ export default function ClientEdit() {
         </div>
     )
 }
-function Form({ client, setClient, clients, setClients, setSendData, sendData }) {
+function Form({ client, setClient, clients, setClients, setSendData, sendData, projectId }) {
 
     // console.log(project)
 
@@ -138,6 +141,7 @@ function Form({ client, setClient, clients, setClients, setSendData, sendData })
 
         setClient({
             ...client,
+            projectId,
             [name]: value
         })
     }
